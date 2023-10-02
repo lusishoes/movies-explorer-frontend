@@ -16,7 +16,7 @@ function AboutMe() {
           У меня есть жена и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. 
           С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, 
           начал заниматься фриланс-заказами и ушёл с постоянной работы.</p>
-          <Link className='aboutme-description__link' to={'https://github.com/'}>Github</Link>
+          <Link className='aboutme__description-link' to={'https://github.com/'}>Github</Link>
       </div>
       <img
         src={vitalik}

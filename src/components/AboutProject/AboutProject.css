@@ -1,6 +1,8 @@
 .aboutProject {
   box-sizing: border-box;
   padding: 110px 70px;
+  max-width: 1280px;
+  margin: 0 auto;
 }
 
 .aboutProject__title-block {

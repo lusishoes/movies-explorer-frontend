@@ -2,6 +2,7 @@
   background-color: #F5F5F5;
   max-height: 625px;
   padding: 100px 70px 0;
+  margin: 0 auto;
 }
 
 .techs-title__container {
@@ -11,6 +12,7 @@
   justify-content: flex-start;
   border-bottom: 1px solid black;
   height: 50px;
+  max-width: 1280px;
 }
 
 .techs-title__text {

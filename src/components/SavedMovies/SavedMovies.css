@@ -3,14 +3,14 @@
   row-gap: 45px;
   column-gap: 30px;
   display: grid;
-  grid-template-columns: repeat(auto-fit,360px);
+  grid-template-columns: repeat(3,360px);
   justify-content: center;
   padding: 0;
   width: 100%;
 }
 
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1150px) {
   .saved_movies__list {
     grid-template-columns: repeat(2, 339px);
     row-gap: 47px;
