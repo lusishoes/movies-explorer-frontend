@@ -1,0 +1,33 @@
+.nav_container{
+  background-color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 66px;
+}
+
+.nav__link {
+  cursor: pointer;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 123.077% */
+  text-decoration-line: underline;
+  margin-left: 40px;
+}
+
+.nav__link:hover {
+  opacity: 0.7;
+}
+
+.nav__link:first-child {
+  margin-left: 0;
+}
+
+@media screen and (max-width: 767px) {
+  .nav__link {
+    margin-left: 24px;
+  }
+}

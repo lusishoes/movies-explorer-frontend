@@ -1,0 +1,27 @@
+.saved_movies__list {
+  margin-top: 80px;
+  row-gap: 45px;
+  column-gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit,360px);
+  justify-content: center;
+  padding: 0;
+  width: 100%;
+}
+
+
+@media screen and (max-width: 1100px) {
+  .saved_movies__list {
+    grid-template-columns: repeat(2, 339px);
+    row-gap: 47px;
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .saved_movies__list {
+    grid-template-columns: repeat(1, 300px);
+    row-gap: 39px;
+    margin-top: 50px;
+  }
+}

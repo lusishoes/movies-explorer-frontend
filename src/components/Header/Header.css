@@ -1,0 +1,20 @@
+.header{
+  background-color: #F3C1F8;
+  padding: 18px 70px;
+}
+
+.header_white {
+  background-color: white;
+}
+
+@media (min-width: 690px) and (max-width: 767px) {
+  .header{
+    padding: 18px 30px;
+  }
+}
+
+@media (min-width: 320px) and (max-width: 689px) {
+  .header{
+    padding: 18px 14px;
+  }
+}
