@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 function Footer() {
   return (
-    <section className="footer_container">
+    <footer className="footer_container">
       <div className="footer__about">
         <p className="footer__text">
           Учебный проект Яндекс.Практикум х BeatFilm.
@@ -16,15 +16,20 @@ function Footer() {
           <Link
             className="footer__bottom-text"
             to={"https://practicum.yandex.ru/"}
+            target="_blank"
           >
             Яндекс.Практикум
           </Link>
-          <Link className="footer__bottom-text" to={"https://github.com/"}>
+          <Link
+            className="footer__bottom-text"
+            to={"https://github.com/"}
+            target="_blank"
+          >
             Github
           </Link>
         </div>
       </div>
-    </section>
+    </footer>
   );
 }
 export default Footer;

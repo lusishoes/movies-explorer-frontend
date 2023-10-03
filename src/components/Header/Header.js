@@ -6,11 +6,11 @@ function Header({ isLoggedIn }) {
   const location = useLocation();
 
   return (
-    <section
+    <header
       className={`header ${location.pathname !== "/" ? "header_white" : ""}`}
     >
       <Navigation isLoggedIn={isLoggedIn} />
-    </section>
+    </header>
   );
 }
 

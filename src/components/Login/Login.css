@@ -36,24 +36,13 @@
   line-height: normal;
 }
 
-.login__subtitle:last-of-type {
-  margin-top: 20px;
-}
-
-.login__subtitle:first-child {
-  margin-top: 0;
-}
-
-.login__button {
-  margin-top: 69px;
-}
-
 .login__link {
   margin-top: 5px;
   align-self: center;
 }
 
 .login__button {
+  margin-top: 69px;
   cursor: pointer;
   color: white;
   width: 396px;
@@ -108,14 +97,13 @@
 }
 
 .login__input-error {
-  margin-top: 10px;
+  min-height: 20px;
   color: #FF4062;
   font-family: Inter;
   font-size: 10px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
-  display: none;
 }
 
 @media screen and (max-width: 767px) {
@@ -141,7 +129,7 @@
   .login__button {
     width: 260px;
     height: 45px;
-    margin-top: 267px;
+    margin-top: 247px;
     color: #FFF;
     text-align: center;
     font-family: Inter;
