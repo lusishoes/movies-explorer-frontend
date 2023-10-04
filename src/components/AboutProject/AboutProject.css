@@ -1,0 +1,192 @@
+.aboutProject {
+  box-sizing: border-box;
+  padding: 110px 70px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.aboutProject__title-block {
+  margin: 0 auto;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  border-bottom: 1px solid black;
+} 
+
+.aboutProject__title{
+  margin: 0 0 23px;
+  color: #000;
+  font-family: Inter;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.88px;
+}
+
+.aboutProject__info{
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  column-gap: 40px;
+}
+
+.aboutProject__info-title {
+  margin: 0 0 26px;
+  color: #000;
+  font-family: Inter;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.8px;
+}
+
+.aboutProject__info-text {
+  margin: 0;
+  color: #000;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px; 
+}
+
+.aboutProject__timelapse{
+  display: grid;
+  width: 100%;
+  grid-template-columns: 0.2fr 0.8fr;
+  margin: 110px 0 0;
+}
+
+.aboutProject__timelapse-firstweek {
+
+  min-height: 18px;
+  background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 9px 0 ;
+}
+
+.aboutProject__timelapse-secondweek {
+  background-color: #F2F2F2;
+  
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.aboutProject__timelapse-firstweek-text {
+  margin: 0;
+  color: #FFF;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.aboutProject__timelapse-secondweek-text {
+  margin: 0;
+  color: #000;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.aboutProject__timelapse-parts {
+  display: flex;
+  flex-direction: column;
+}
+
+.aboutProject__timelapse-firstweek-parts{
+  padding: 9px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+}
+
+.aboutProject__timelapse-secondweek-parts {
+  /* width: 912px; */
+  min-height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;  
+}
+
+.aboutProject__timelapse-text {
+  margin:  0;
+  color: #A0A0A0;
+  text-align: center;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 17px; 
+
+}
+
+.aboutProject__about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media screen and (max-width: 689px) {
+  .aboutProject__info{
+    margin-top: 70px;
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .aboutProject {
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1280px;
+    padding: 70px 18px;
+  }
+
+  .aboutProject__title{
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.72px;
+    margin-bottom: 28px;
+  }
+
+  .aboutProject__info-title {
+    color: #000;
+    font-family: Inter;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -0.72px;
+    margin-bottom: 16px;
+  }
+  
+  .aboutProject__info-text {
+    color: #000;
+    font-family: Inter;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+  }
+  
+  .aboutProject__timelapse{
+    margin-top: 60px;
+    grid-template-columns: 100px 1fr;
+  }
+  
+}

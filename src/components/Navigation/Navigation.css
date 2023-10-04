@@ -1,0 +1,142 @@
+
+.navigation_wrapper{
+  max-width: 1280px;
+  margin: 0 auto;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.navigation__logo{
+  height: 38px;
+  width: 38px;
+}
+
+.navigation__signin-link {
+  color: #FFF;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.navigation__link{
+  color: #000;
+  text-align: right;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+  text-decoration: none;
+  align-self: center;
+}
+
+.navigation__link:hover {
+  opacity: 0.7;
+}
+
+.navigation__container {
+  display: flex;
+  flex-direction: row;
+}
+
+.navigation__signin-link_wrapper{
+  cursor: pointer;
+  display: flex;
+  width: 76px;
+  height: 32px;
+  margin-left: 32px;
+  background-color: black;
+  border-radius: 3px;
+  align-items: center;
+  justify-content: center;
+}
+
+.navigation__signin-link_wrapper:hover{
+  opacity: 0.7;
+}
+
+.navigation__link-loggedin {
+  line-height: 18px;
+}
+
+.navigation__links-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.navigation__link-loggedin:nth-last-child(2) {
+  margin-left: 20px;
+}
+.navigation__profile {
+  margin-left: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navigation__link-profile {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px;
+  text-decoration: none;
+}
+
+.navigation__link-profile:hover {
+  opacity: 0.7;
+}
+
+.navigation__link-profile_logo {
+  background-color: #000;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  margin-left: 13px;
+}
+
+.navigation__link-profile_logo-grey {
+  background-color: #F9F9F9;
+}
+
+.navigation__logo-profile {
+  width: 10.38px;
+  height: 10.67px;
+}
+
+.navigation__link-choise {
+  border-bottom: 2px solid #000;
+}
+
+.navigation__logo-burger {
+  visibility:hidden;
+  position: absolute;
+}
+
+@media screen and (max-width: 767px) {
+  .navigation__logo-burger {
+    visibility: visible;
+    padding: 0;
+    border: none;
+    background-size: cover;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    right: 18px;
+    width: 44px;
+    height: 44px;
+  }
+
+  .navigation__links-wrapper {
+    visibility: hidden;
+  }
+
+  .navigation__link{
+    display: none;
+  }
+}

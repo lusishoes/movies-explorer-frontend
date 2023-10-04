@@ -1,0 +1,118 @@
+.burger_wrapper{
+  background-color: rgba(0, 0, 0, 0.3);
+  bottom: 0;
+  height: 100vh;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 55;
+  position: fixed;
+}
+
+.burger__container {
+  background: white;
+  height: 100dvh;
+  max-width: 520px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+}
+
+.burger__link-elements {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  list-style: none;
+  margin: 159px auto 0;
+  padding: 0;
+  align-items: center;
+}
+
+.burger__close-icon {
+  position: absolute;
+  top: 23px;
+  right: 23px;
+  cursor: pointer;
+}
+
+.burger__close-icon:hover {
+  opacity: 0.8;
+}
+
+.burger__link-list {
+  list-style-type: none;
+}
+
+.burger__link {
+  color: #000;
+  text-align: center;
+  font-feature-settings: 'clig' off, 'liga' off;
+  font-family: Inter;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration: none;
+}
+
+.burger__link:hover {
+  opacity: 0.8;
+}
+
+.burger__link:first-of-type {
+  margin-top: 106px;
+}
+
+.burger__link-chosen {
+  text-decoration: underline;
+}
+
+.burger__account {
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  bottom: 48px;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.burger__account-info {
+  margin: 0;
+  color: #000;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 16px; /* 114.286% */
+  text-decoration: none;
+}
+
+.burger__account-info-choisen {
+  text-decoration: underline;
+}
+
+
+.burger__account-icon_wrapper {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  background-color: #F9F9F9;
+  margin-left: 13px;display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 690px) {
+  .burger__link-elements {
+    margin: 144px auto 0;
+    gap: 24px;
+  }
+}
