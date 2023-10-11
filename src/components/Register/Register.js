@@ -1,31 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
+import { useFormWithValidation } from "../../hooks/useForm";
 
-function Register() {
+function Register({ onRegister }) {
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+
+  const handleRegister = (e) => {
+    e.preventDefault();
+    onRegister(values.name, values.email, values.password);
+    resetForm();
+  };
+
   return (
     <>
       <form
         className={`register_container`}
         name={`register__container`}
-        // onSubmit={handleRegister}
+        onSubmit={handleRegister}
       >
         <img src={logo} alt="логотип" className="register__logo" />
         <h3 className="register__title">Добро пожаловать!</h3>
         <p className="register__subtitle">Имя</p>
         <input
           id="input-name"
-          type="name"
           placeholder="Имя"
           className="register__input"
-          name="email"
+          name="name"
           required={true}
+          value={values?.name}
+          onChange={(e) =>  handleChange(e)}
         />
         <span
-          id="input-profile-image-error"
           className="register__input-error"
-        ></span>
+        >{errors?.name}</span>
         <p className="register__subtitle">E-mail</p>
         <input
           id="input-email"
@@ -34,11 +43,12 @@ function Register() {
           className="register__input"
           name="email"
           required={true}
+          value={values?.email}
+          onChange={(e) => handleChange(e)}
         />
         <span
-          id="input-profile-image-error"
           className="register__input-error"
-        ></span>
+        >{errors?.email}</span>
         <p className="register__subtitle">Пароль</p>
         <input
           id="input-password"
@@ -47,11 +57,12 @@ function Register() {
           className="register__input"
           name="password"
           required={true}
+          value={values?.password}
+          onChange={(e) => handleChange(e)}
         />
         <span
-          id="input-profile-image-error"
           className="register__input-error"
-        ></span>
+        >{errors?.password}</span>
         <button className="register__button" type="submit">
           Зарегистрироваться
         </button>

@@ -46,11 +46,30 @@
   opacity: 1;
 }
 
+.popup__close-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  background-image: url(../../images/close-icon.svg);
+  background-size: 100% 100%;
+  cursor: pointer;
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  align-self: flex-end;
+  top: -40px;
+  right: -40px;
+}
+
+
 @media (max-width: 768px) {
   .popup__info-message {
       font-size: 20px;
   }
 }
+
+
+
 
 
 @media (max-width: 768px) {

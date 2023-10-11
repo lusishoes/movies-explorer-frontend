@@ -1,11 +1,33 @@
-import React from "react";
+import React, {  useState, useContext } from "react";
 import "./Login.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
-function Login() {
+
+function Login({ onLogin }) {
+
+  const [formValue, setFormValue] = useState({
+    email: '',
+    password: ''
+  })
+
+
+  const handleChange = (e) => {
+    const {name, value} = e.target;
+
+    setFormValue({
+      ...formValue,
+      [name]: value
+    });
+  }
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    onLogin(formValue.password, formValue.email);
+  }
+
   return (
     <>
-      <form className={`login_container`} name={`login_container`}>
+      <form className={`login_container`} name={`login_container`} onSubmit={handleLogin}>
         <img src={logo} alt="логотип" className="login__logo" />
         <h3 className="login__title">Рады видеть!</h3>
         <p className="login__subtitle">E-mail</p>
@@ -16,6 +38,7 @@ function Login() {
           className="login__input"
           name="email"
           required={true}
+          onChange={handleChange}
         />
         <span
           id="input-profile-image-error"
@@ -29,6 +52,7 @@ function Login() {
           className="login__input"
           name="password"
           required={true}
+          onChange={handleChange}
         />
         <span
           id="input-profile-image-error"

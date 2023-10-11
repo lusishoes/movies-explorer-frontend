@@ -1,7 +1,7 @@
 import React from 'react';
 import success from '../../images/success.svg';
 import fail from '../../images/fail.svg'
-
+import './InfoTooltip.css';
 function InfoTooltip({  isOpen, onClose, messegeState}) {
     return(
         <section className={`popup popup_theme_info-popup ${isOpen ? `popup_opened`: ""}`}>

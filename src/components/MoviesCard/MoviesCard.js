@@ -3,8 +3,8 @@ import "./MoviesCard.css";
 import saveimg from "../../images/cardiconimg.svg";
 import { useLocation } from "react-router-dom";
 import deleteimg from "../../images/deleteicon.svg";
-
-function MoviesCard(props) {
+const API_URL = "https://api.nomoreparties.co";
+function MoviesCard({ movie }) {
   const location = useLocation();
   const [saveCard, setSaveCard] = useState(false);
   const [showBtn, setshowBtn] = useState(false);
@@ -15,13 +15,21 @@ function MoviesCard(props) {
     setshowBtn(false);
   }
 
+  const movieDuration = `${Math.trunc(movie.duration / 60)
+    .toString()
+    .padStart(2, "0")}ч ${(movie.duration % 60).toString().padStart(2, "0")}м`;
+
+  const movieImgUrl = `${API_URL}${movie.image.url}`;
+
   return (
     <article
       className="card"
       onMouseEnter={showButton}
       onMouseLeave={deleteButton}
     >
-      <img src={props.img} alt={props.name} className="card__img" />
+      <a className="card__movie-link" target="_blank" href={movie.trailerLink}>
+        <img src={movieImgUrl} alt={movie.nameRU} className="card__img" />
+      </a>
       {location.pathname === "/movies" &&
         showBtn == true &&
         saveCard !== true && (
@@ -44,8 +52,8 @@ function MoviesCard(props) {
         />
       )}
       <div className="card__footer">
-        <h2 className="card__title">{props.name}</h2>
-        <p className="card__time">{props.time}</p>
+        <h2 className="card__title">{movie.nameRU}</h2>
+        <p className="card__time">{movieDuration}</p>
       </div>
     </article>
   );

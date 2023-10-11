@@ -5,8 +5,12 @@ import firstimg from "../../images/film1.png";
 import secondimg from "../../images/film2.png";
 import thirdmg from "../../images/film3.png";
 import MoviesCard from "../MoviesCard/MoviesCard";
-function SavedMovies() {
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+function SavedMovies({ isLoggedIn  }) {
   return (
+    <>
+    <Header isLoggedIn={isLoggedIn}/>
     <section className="saved_movies">
       <SearchForm />
       <div className="saved_movies__list">
@@ -23,6 +27,8 @@ function SavedMovies() {
         <MoviesCard name={"В погоне за Бенкси"} img={thirdmg} time={"1ч 17м"} />
       </div>
     </section>
+    <Footer />
+    </>
   );
 }
 

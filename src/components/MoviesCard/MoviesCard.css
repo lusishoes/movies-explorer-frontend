@@ -74,6 +74,8 @@
 }
 
 .card__img {
+  width: 360px;
+  height: 201px;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
