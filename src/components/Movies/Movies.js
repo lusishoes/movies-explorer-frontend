@@ -6,28 +6,89 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import * as moviesApi from '../../utils/MoviesApi';
 
-function Movies({ isLoggedIn  }) {
-  const [isShortMovie, setIsShortMovie] = useState([]);
-  const [movies, setMovies] = useState({});
+function Movies({ isLoggedIn, onSavedMovies  }) {
+  const [isShortMovie, setIsShortMovie] = useState(false);
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([])
 
-  useEffect(() => {
-    if(isLoggedIn) {
+  function movieDuratationCounter(movies) {
+    return movies.filter((movie) => movie.duration <= 40);
+  }
+
+    // осущесвляем запрос
+    function filterMovies(movies, query) {
+      return movies.filter(movie => 
+        movie.nameRU.toLowerCase().includes(query.toLowerCase()) || 
+        movie.nameEN.toLowerCase().includes(query.toLowerCase())
+      );
+    }
+
+  function handleMoviesFilter(movies, query, isShortMovie) {
+    const moviesList = filterMovies(movies, query);
+    setSearchedMovies(moviesList); // возвращаем отфильтрованные
+    setSearchedFilteredMovies(isShortMovie ? movieDuratationCounter(moviesList) : moviesList);
+    localStorage.setItem('movies', JSON.stringify(moviesList));
+    localStorage.setItem('allFilms', JSON.stringify(movies));
+  }
+
+  function handleShortMovies() {
+    setIsShortMovie(!isShortMovie);
+    if(!isShortMovie) {
+      if (movieDuratationCounter(searchedMovies).length === 0) {
+      setSearchedFilteredMovies(movieDuratationCounter(searchedMovies));
+      } else {
+      setSearchedFilteredMovies(movieDuratationCounter(searchedMovies));
+      }
+    } else {
+      setSearchedFilteredMovies(searchedMovies);
+    }
+    localStorage.setItem('isShortMovie', !isShortMovie);
+  }
+
+
+  function findMovie(query) {
+    localStorage.setItem('query', query);
+    localStorage.setItem('isShortMovie', isShortMovie);
+    if(localStorage.getItem('allFilms')) {
+      const movies = JSON.parse(localStorage.getItem('allFilms'));
+      handleMoviesFilter(movies, query, isShortMovie);
+    } else {
+      console.log('esdf');
       moviesApi.getMovies()
         .then((res) => {
-          setMovies(res);
+          handleMoviesFilter(res, query, isShortMovie);
         })
         .catch((err) => {
           console.log(err);
         })
     }
-  }, [isLoggedIn])
+  }
 
+  useEffect(() => {
+    if(localStorage.getItem('isShortMovie') === 'true') {
+      setIsShortMovie(true);
+    } else {
+      setIsShortMovie(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if(localStorage.getItem('movies')) {
+      const movies = JSON.parse(localStorage.getItem('movies'));
+      setSearchedMovies(movies);
+      if(localStorage.getItem('isShortMovie') === 'true') {
+        setSearchedFilteredMovies(movieDuratationCounter(movies));
+      } else {
+        setSearchedFilteredMovies(movies);
+      }
+    }
+  }, []);
 
   return (
     <>
       <Header isLoggedIn={isLoggedIn}/>
-      <SearchForm />
-      <MoviesCardList isLoggedIn={isLoggedIn} movies={movies}/>
+      <SearchForm onFindMovie={findMovie} isShortMovie={isShortMovie} onStartFilter={handleShortMovies}/>
+      <MoviesCardList isLoggedIn={isLoggedIn} movies={searchedFilteredMovies} onSavedMovies={onSavedMovies}/>
       <Footer />
     </>
   );

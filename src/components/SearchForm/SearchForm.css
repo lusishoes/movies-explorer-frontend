@@ -46,6 +46,17 @@
   color: #A0A0A0;
 }
 
+.search__validator {
+  min-height: 16px;
+  color: #FF4062;
+  font-family: Inter;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 100%;
+}
+
 .search__btn {
   margin-right: 19px;
   background: #000;

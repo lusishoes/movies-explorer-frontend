@@ -69,9 +69,9 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
           </div>
             <span className="profile__validation">{ errors.name }</span>
         </div>
-        
+
         <div className="profile__info">
-        
+
         <div className="profile__wrapper">
           <p className="profile__category">E-mail</p>
             <input
@@ -102,4 +102,3 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
 }
 
 export default Profile;
-//isDisabled === true ? currentUser.email : values.email

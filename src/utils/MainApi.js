@@ -1,5 +1,5 @@
  const BASE_URL = 'https://api.lusishoes.movies.nomoredomainsrocks.ru';
-
+ const MOVIE_API_URL = "https://api.nomoreparties.co";
  export const register = (name, email, password) => {
     return fetch(`${BASE_URL}/signup`, {
       method: 'POST',
@@ -34,24 +34,39 @@
         },
       }).then(handleResponse);
   }
+  // сохраняем фильмы
+  export const setSavedMovies = (data) => {
+    console.log(data.image.url)
+    return fetch(`${BASE_URL}/movies`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("jwt")}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        country: data.country,
+        director: data.director,
+        duration: data.duration,
+        year: data.year,
+        description: data.description,
+        image: `${MOVIE_API_URL}${data.image.url}`,
+        trailerLink: data.trailerLink,
+        thumbnail:
+        `${MOVIE_API_URL}${data.image.formats.thumbnail.url}`,
+        movieId: data.id,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
+      }),
+    }).then(handleResponse);
+  };
 
-   // карточки не мои
-  export const getInitialCards = () => {
-      return fetch(`${BASE_URL}/cards`, {
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-          },
-          method: 'GET',
-      }).then(handleResponse);
-  }
   // получаем дефолтную инфу 
   export const getUserData = () =>{
       return fetch(`${BASE_URL}/users/me`, {
           headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-          },
+          }
         }).then(handleResponse);
   }
 
@@ -68,23 +83,11 @@
       }).then(handleResponse);
   }
 
-  // добавлени новой карточки 
-  export const getCreatedCard = ({data}) => {
-      return fetch(`${BASE_URL}/cards`, {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-          },
-          body: JSON.stringify({
-              name: `${data.name}`,
-              link: `${data.link}`,
-          })  
-      }).then(handleResponse);
-  }
+
   // удаление карточки 
-  export const deleteCard = ({id}) => {
-      return fetch(`${BASE_URL}/cards/${id}`, {
+  export const deleteMovie = (id) => {
+    console.log(id);
+      return fetch(`${BASE_URL}/movies/${id}`, {
           method: 'DELETE',
           headers: {
               'Content-Type': 'application/json',
@@ -93,26 +96,26 @@
       }).then(handleResponse);  
   }
 
-  export const changeLikeCardStatus = ({cardId, isLiked}) => {
-      if (isLiked) {
-          return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
-              method: 'PUT',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-              }
-          }).then(handleResponse);
-      }
-      else {
-          return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
-              method: 'DELETE',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-              }
-          }).then(handleResponse);
-      }
-    }
+//   export const changeLikeCardStatus = ({cardId, isLiked}) => {
+//       if (isLiked) {
+//           return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
+//               method: 'PUT',
+//               headers: {
+//                   'Content-Type': 'application/json',
+//                   'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+//               }
+//           }).then(handleResponse);
+//       }
+//       else {
+//           return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
+//               method: 'DELETE',
+//               headers: {
+//                   'Content-Type': 'application/json',
+//                   'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+//               }
+//           }).then(handleResponse);
+//       }
+//     }
 
  const handleResponse = (res) => {
       if(res.ok) {

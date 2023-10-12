@@ -1,33 +1,41 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./SavedMovies.css";
 import SearchForm from "../SearchForm/SearchForm";
-import firstimg from "../../images/film1.png";
-import secondimg from "../../images/film2.png";
-import thirdmg from "../../images/film3.png";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
-function SavedMovies({ isLoggedIn  }) {
+import useWindowWidth from "../../hooks/useWindowWidth";
+function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
+  const [movieQuantity, setmovieQuantity] = useState(0);
+  const windowWidth = useWindowWidth();
+  useEffect(() => {
+    if (windowWidth > 1150) {
+      setmovieQuantity(12);
+    } else if (windowWidth > 720) {
+      setmovieQuantity(8);
+    } else {
+      setmovieQuantity(5);
+    }
+  }, [windowWidth]);
+
   return (
     <>
     <Header isLoggedIn={isLoggedIn}/>
     <section className="saved_movies">
       <SearchForm />
-      <div className="saved_movies__list">
-        <MoviesCard
-          name={"33 слова о дизайне"}
-          img={firstimg}
-          time={"1ч 17м"}
-        />
-        <MoviesCard
-          name={"Киноальманах «100 лет дизайна»"}
-          img={secondimg}
-          time={"1ч 17м"}
-        />
-        <MoviesCard name={"В погоне за Бенкси"} img={thirdmg} time={"1ч 17м"} />
+      <div className="saved_movies__list"  >
+      {Array.isArray(savedMovies) && savedMovies.slice(0, movieQuantity).map((movie, id) => {
+          return (
+            <MoviesCard
+              movie={movie}
+              key={id}
+              onDeleteMovie={onDeleteMovie}
+            />
+          );
+        })}
       </div>
     </section>
-    <Footer />
+    <Footer/>
     </>
   );
 }

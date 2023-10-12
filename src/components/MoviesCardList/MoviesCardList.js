@@ -4,7 +4,7 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 
 import CardsLoader from "../CradsLoader/CardsLoader";
 import useWindowWidth from "../../hooks/useWindowWidth";
-function MoviesCardList({ isLoggedIn, movies }) {
+function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
 
@@ -17,9 +17,9 @@ function MoviesCardList({ isLoggedIn, movies }) {
       setmovieQuantity(5);
     }
   }, [windowWidth]);
-  useEffect(() => {
+  // useEffect(() => {
 
-  }, [isLoggedIn])
+  // }, [isLoggedIn])
 
   return (
     <div className="cards">
@@ -29,6 +29,7 @@ function MoviesCardList({ isLoggedIn, movies }) {
             <MoviesCard
               movie={movie}
               key={id}
+              onSavedMovies={onSavedMovies}
             />
           );
         })}

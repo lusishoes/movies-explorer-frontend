@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./MoviesCard.css";
 import saveimg from "../../images/cardiconimg.svg";
 import { useLocation } from "react-router-dom";
 import deleteimg from "../../images/deleteicon.svg";
 const API_URL = "https://api.nomoreparties.co";
-function MoviesCard({ movie }) {
+function MoviesCard({ movie, onSavedMovies, onDeleteMovie }) {
   const location = useLocation();
   const [saveCard, setSaveCard] = useState(false);
   const [showBtn, setshowBtn] = useState(false);
@@ -13,6 +13,14 @@ function MoviesCard({ movie }) {
   }
   function deleteButton() {
     setshowBtn(false);
+  }
+
+  function deleteMovie() {
+    onDeleteMovie(movie);
+  }
+
+  function saveFilm() {
+    onSavedMovies(movie);
   }
 
   const movieDuration = `${Math.trunc(movie.duration / 60)
@@ -33,7 +41,10 @@ function MoviesCard({ movie }) {
       {location.pathname === "/movies" &&
         showBtn == true &&
         saveCard !== true && (
-          <button className={`card__save`} onClick={() => setSaveCard(true)}>
+          <button className={`card__save`} onClick={() => {
+            setSaveCard(!saveCard)
+            saveFilm()
+            }}>
             Сохранить
           </button>
         )}
@@ -49,6 +60,7 @@ function MoviesCard({ movie }) {
           className="card__save-img"
           src={deleteimg}
           alt="значек сохранения карточки"
+          onClick={() => deleteMovie()}
         />
       )}
       <div className="card__footer">

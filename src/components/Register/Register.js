@@ -28,6 +28,8 @@ function Register({ onRegister }) {
           placeholder="Имя"
           className="register__input"
           name="name"
+          minLength="2"
+          maxLength="30"
           required={true}
           value={values?.name}
           onChange={(e) =>  handleChange(e)}
@@ -43,6 +45,9 @@ function Register({ onRegister }) {
           className="register__input"
           name="email"
           required={true}
+          minLength="2"
+          maxLength="30"
+          pattern="[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-z]{2,4}$"
           value={values?.email}
           onChange={(e) => handleChange(e)}
         />

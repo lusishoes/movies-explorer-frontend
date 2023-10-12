@@ -12,13 +12,14 @@ import Profile from "../Profile/Profile";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import * as mainApi from "../../utils/MainApi";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import InfoTooltip from '../InfoTooltip/InfoTooltip';
+import InfoTooltip from "../InfoTooltip/InfoTooltip";
 function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
   const [data, setData] = useState({});
+  const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
   const checkToken = () => {
@@ -44,11 +45,11 @@ function App() {
   }, []);
 
   const handleOnRegister = (name, email, password) => {
-    console.log(name, email, password)
+    console.log(name, email, password);
     mainApi
       .register(name, email, password)
       .then((res) => {
-        console.log(res.status)
+        console.log(res.status);
         setisInfoTooltipOpen(true);
         setIsInfoTooltip(true);
         navigate("/signin");
@@ -72,35 +73,64 @@ function App() {
   };
   // отпраляю новые email, name на сервер, получаю -> устанавливаю их для currentUser
   const handleUpdateUser = (name, email) => {
-    mainApi.setUserInfo(name, email)
+    mainApi
+      .setUserInfo(name, email)
       .then((res) => {
         setCurrentUser(res);
       })
       .catch((err) => {
         console.log(err);
       });
-  }
+  };
+
+  const handleSaveMovies = (movie) => {
+    mainApi
+      .setSavedMovies(movie)
+      .then((res) => { 
+        setSavedMovies([res, ...savedMovies]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleDeleteMovie = (movie) => {
+    console.log(movie._id);
+    mainApi.deleteMovie(movie._id).then(() => {
+      setSavedMovies((state) => {
+        state.filter((elem) => elem._id !== movie._id);
+      });
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  };
 
   const signOut = () => {
     localStorage.removeItem("jwt");
+    localStorage.removeItem("movies");
+    localStorage.removeItem("allFilms");
+    localStorage.removeItem("isShortMovie");
+    localStorage.removeItem("query");
     navigate("/signin");
   };
 
   function closeAllPopups() {
     setisInfoTooltipOpen(false);
   }
-// при входе с сервера получаю email, name -> устанавливаю их для currentUser
+  // при входе с сервера получаю email, name -> устанавливаю их для currentUser
   useEffect(() => {
-    if(isLoggedIn) {
-      mainApi.getUserData()
+    if (isLoggedIn) {
+      mainApi
+        .getUserData()
         .then((res) => {
-          setCurrentUser(res)
+          setCurrentUser(res);
         })
         .catch((err) => {
-          console.log(err)
-        })
+          console.log(err);
+        });
     }
-  }, [isLoggedIn])
+  }, [isLoggedIn]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -123,27 +153,45 @@ function App() {
         {/* Защитить */}
         <Route
           path="/profile"
-          element={<ProtectedRoute isLoggedIn={isLoggedIn} element={Profile} onSignOut={signOut} handleUpdateUser={handleUpdateUser}/>}
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              element={Profile}
+              onSignOut={signOut}
+              handleUpdateUser={handleUpdateUser}
+            />
+          }
         />
         {/* Защитить */}
         <Route
           path="/movies"
-          element={<ProtectedRoute isLoggedIn={isLoggedIn} element={Movies} />}
+          element={
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              element={Movies}
+              onSavedMovies={handleSaveMovies}
+            />
+          }
         />
         {/* Защитить */}
         <Route
           path="/saved-movies"
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn} element={SavedMovies} />
+            <ProtectedRoute
+              isLoggedIn={isLoggedIn}
+              element={SavedMovies}
+              savedMovies={savedMovies}
+              onDeleteMovie={handleDeleteMovie}
+            />
           }
         />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <InfoTooltip
-          isOpen={isInfoTooltipOpen}
-          onClose={closeAllPopups}
-          messegeState={isInfoTooltip}
-        />
+        isOpen={isInfoTooltipOpen}
+        onClose={closeAllPopups}
+        messegeState={isInfoTooltip}
+      />
     </CurrentUserContext.Provider>
   );
 }
