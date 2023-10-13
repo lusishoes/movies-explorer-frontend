@@ -47,7 +47,7 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMo
           );
         })}
       </div>
-      {movies.length === 0 && onQuery.length >= 0 ? <EmptyComponent /> : ''}
+      {movies.length === 0 && onQuery.length > 0 ? <EmptyComponent /> : ''}
       {movies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
     </div>
   );

@@ -17,20 +17,19 @@ function MoviesCard({ movie, onSavedMovies, onDeleteMovie, savedMovies }) {
   function deleteButton() {
     setshowBtn(false);
   }
-
   useEffect(() => {
     getSavedMovieCard(savedMovies, movie);
   })
-
+  // если карточка сохранена показываю галочку
   function getSavedMovieCard(savedMovies, movie) {
-      if(savedMovies.find((savedMovie) => savedMovie.trailerLink === movie.trailerLink)) {
-        setSaveCard(true);
-      } else {
-        setSaveCard(false);
-      }
-  }
+    if(savedMovies.find((savedMovie) => savedMovie.trailerLink === movie.trailerLink)) {
+      setSaveCard(true);
+    } else {
+      setSaveCard(false);
+    }
+}
 
-
+  // удаление фильма
   function deleteMovie() {
     if(location.pathname === '/movies') {
       onDeleteMovie(savedMovies.find((film) => film.trailerLink === movie.trailerLink));
@@ -38,12 +37,11 @@ function MoviesCard({ movie, onSavedMovies, onDeleteMovie, savedMovies }) {
       onDeleteMovie(movie);
     }
   }
-
+  // сохранение фильма
   function saveFilm() {
-    console.log(savedMovies)
+    
     getSavedMovieCard(savedMovies, movie);
     onSavedMovies(movie);
-   
   }
 
 

@@ -37,10 +37,18 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
 
   useEffect(() => {
     const moviesList = filterMovies(savedMovies, moviesQuery); // отфильтрованный массив содержащий moviesQuery
-    setSearchedFilteredMovies(
-      // если короткие то фильтрация по длине с содержанием moviesQuery иначе просто moviesQuery
-      isShortMovie ? movieDuratationCounter(moviesList) : moviesList
-    );
+    if(movieDuratationCounter(moviesList).length > 0) {
+      setSearchedFilteredMovies(
+        // если короткие то фильтрация по длине с содержанием moviesQuery иначе просто moviesQuery
+        isShortMovie ? movieDuratationCounter(moviesList) : moviesList
+      );
+    } else {
+      setSearchedFilteredMovies(
+        moviesList
+      );
+      setIsShortMovie(false)
+    }
+
   }, [savedMovies, isShortMovie, moviesQuery]);
 
   useEffect(() => {
@@ -101,7 +109,7 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
               
         </div>
       </section>
-      {searchedFilteredMovies.length === 0 && moviesQuery.length > 0 ? <EmptyComponent /> : ''}
+      {searchedFilteredMovies.length === 0 && moviesQuery.length  > 0 ? <EmptyComponent /> : ''}
       {searchedFilteredMovies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
       <Footer />
     </>

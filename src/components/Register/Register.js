@@ -18,7 +18,7 @@ function Register({ onRegister }) {
       <form
         className={`register_container`}
         name={`register__container`}
-        onSubmit={handleRegister}
+        onSubmit={isValid ? handleRegister : ''}
       >
         <img src={logo} alt="логотип" className="register__logo" />
         <h3 className="register__title">Добро пожаловать!</h3>
@@ -71,7 +71,7 @@ function Register({ onRegister }) {
         <button className="register__button" type="submit">
           Зарегистрироваться
         </button>
-        <Link to="/signin" className="register__link">
+        <Link to="/signin" className={`register__link  ${isValid ? '' : "register__link-disabled"}`} onClick={() => console.log(errors)}>
           Уже зарегистрированы? <p className="register__link-signin">Войти</p>
         </Link>
       </form>
