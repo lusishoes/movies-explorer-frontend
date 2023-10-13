@@ -101,7 +101,7 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
               
         </div>
       </section>
-      {searchedFilteredMovies.length === 0 && moviesQuery.length >= 0 ? <EmptyComponent /> : ''}
+      {searchedFilteredMovies.length === 0 && moviesQuery.length > 0 ? <EmptyComponent /> : ''}
       {searchedFilteredMovies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
       <Footer />
     </>
