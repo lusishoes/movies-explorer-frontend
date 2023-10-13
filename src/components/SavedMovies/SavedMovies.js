@@ -43,10 +43,6 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
     );
   }, [savedMovies, isShortMovie, moviesQuery]);
 
-  useEffect(() => {});
-
-
-
   useEffect(() => {
     if (windowWidth > 1150) {
       setmovieQuantity(12);
@@ -96,14 +92,16 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
                     movie={movie}
                     key={id}
                     onDeleteMovie={onDeleteMovie}
+                    savedMovies={savedMovies}
                   />
                 );
               }) : ''}
                 {/* тут если ничего не найдено*/}
-                {searchedFilteredMovies.length === 0 && moviesQuery.length >= 0 ? <EmptyComponent /> : ''}
+               
               
         </div>
       </section>
+      {searchedFilteredMovies.length === 0 && moviesQuery.length >= 0 ? <EmptyComponent /> : ''}
       {searchedFilteredMovies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
       <Footer />
     </>

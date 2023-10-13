@@ -1,34 +1,12 @@
 import React, { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
-
+import EmptyComponent from "../EmptyComponent/EmptyComponent";
 import CardsLoader from "../CradsLoader/CardsLoader";
 import useWindowWidth from "../../hooks/useWindowWidth";
-function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
+function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMovie, savedMovies}) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
-
-  // useEffect(() => {
-  //   if (windowWidth > 1150) {
-  //     if(movies.length > 12) {
-  //       setmovieQuantity(12);
-  //     } else {
-  //       setmovieQuantity(movies.length);
-  //     }
-  //   } else if (windowWidth > 720) {
-  //     if(movies.length > 8) {
-  //       setmovieQuantity(8);
-  //     } else {
-  //       setmovieQuantity(movies.length);
-  //     }
-  //   } else {
-  //     if(movies.length > 5) {
-  //       setmovieQuantity(5);
-  //     } else {
-  //       setmovieQuantity(movies.length);
-  //     }
-  //   }
-  // }, [windowWidth]);
 
 
   useEffect(() => {
@@ -52,19 +30,24 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
     }
   }
 
+  
+
   return (
     <div className="cards">
-      <div className="cards__list" onClick={() => console.log(movies.length, movieQuantity)}>
+      <div className="cards__list">
         {Array.isArray(movies) && movies.slice(0, movieQuantity).map((movie, id) => {
           return (
             <MoviesCard
               movie={movie}
               key={id}
               onSavedMovies={onSavedMovies}
+              onDeleteMovie={onDeleteMovie}
+              savedMovies={savedMovies}
             />
           );
         })}
       </div>
+      {movies.length === 0 && onQuery.length >= 0 ? <EmptyComponent /> : ''}
       {movies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
     </div>
   );

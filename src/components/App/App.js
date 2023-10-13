@@ -22,6 +22,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
+  // проверка наличия токена для авторизации
   const checkToken = () => {
     const jwt = localStorage.getItem("jwt");
     mainApi
@@ -39,11 +40,12 @@ function App() {
         console.log(e);
       });
   };
-
+  // проверка токена при монтировании компонента
   useEffect(() => {
     checkToken();
   }, []);
 
+  // фукнция регистрации
   const handleOnRegister = (name, email, password) => {
     console.log(name, email, password);
     mainApi
@@ -60,7 +62,7 @@ function App() {
         console.log(err);
       });
   };
-
+  // функция при логине
   const handleOnLogin = (password, email) => {
     mainApi
       .login(password, email)
@@ -82,26 +84,26 @@ function App() {
         console.log(err);
       });
   };
-
+  // сохраняю фильмы на своем сервере
   const handleSaveMovies = (movie) => {
     mainApi
       .setSavedMovies(movie)
       .then((res) => {
-        console.log(res._id);
+        // console.log(res._id);
         if (Array.isArray(savedMovies)) {
           setSavedMovies([res, ...savedMovies]);
         } else {
           setSavedMovies([res]);
         }
-        console.log(savedMovies);
+        // console.log(savedMovies);
       })
       .catch((err) => {
         console.log(err);
       });
   };
-
+  // удаляю фильмы со своего сервера
   const handleDeleteMovie = (movie) => {
-    console.log(movie._id);
+    console.log(movie);
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
@@ -111,20 +113,21 @@ function App() {
         console.log(err);
       });
   };
-
+  // при выходе чищу локалстордж
   const signOut = () => {
     localStorage.removeItem("jwt");
     localStorage.removeItem("movies");
     localStorage.removeItem("allFilms");
     localStorage.removeItem("isShortMovie");
     localStorage.removeItem("query");
-    navigate("/signin");
+    localStorage.clear();
+    navigate("/");
   };
-
+  // при закрытии попапа
   function closeAllPopups() {
     setisInfoTooltipOpen(false);
   }
-  // при входе с сервера получаю email, name -> устанавливаю их для currentUser
+  // при входе с сервера получаю email, name -> устанавливаю их для currentUser, так же получаю сохраненные фильмы
   useEffect(() => {
     if (isLoggedIn) {
       mainApi
@@ -135,6 +138,14 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
+
+      mainApi.getMovies()
+        .then((res) => {
+          setSavedMovies(res)
+        })
+        .catch((err) => {
+          console.log(err);
+        })
     }
   }, [isLoggedIn]);
 
@@ -176,6 +187,8 @@ function App() {
               isLoggedIn={isLoggedIn}
               element={Movies}
               onSavedMovies={handleSaveMovies}
+              onDeleteMovie={handleDeleteMovie}
+              savedMovies={savedMovies}
             />
           }
         />

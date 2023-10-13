@@ -96,26 +96,17 @@
       }).then(handleResponse);  
   }
 
-//   export const changeLikeCardStatus = ({cardId, isLiked}) => {
-//       if (isLiked) {
-//           return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
-//               method: 'PUT',
-//               headers: {
-//                   'Content-Type': 'application/json',
-//                   'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-//               }
-//           }).then(handleResponse);
-//       }
-//       else {
-//           return fetch(`${BASE_URL}/cards/${cardId}/likes`, {
-//               method: 'DELETE',
-//               headers: {
-//                   'Content-Type': 'application/json',
-//                   'Authorization': `Bearer ${localStorage.getItem('jwt')}`
-//               }
-//           }).then(handleResponse);
-//       }
-//     }
+  export const getMovies = () => {
+    return fetch(`${BASE_URL}/movies`, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('jwt')}`
+    }
+    }).then(handleResponse);  
+  };
+
+
 
  const handleResponse = (res) => {
       if(res.ok) {
