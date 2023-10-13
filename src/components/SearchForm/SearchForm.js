@@ -7,11 +7,12 @@ function SearchForm({onFindMovie, isShortMovie, onStartFilter}) {
   const [query, setQuery] = useState("");
   const [isError, setIsError] = useState(false);
   const location = useLocation();
+  const [isSearch, setIsSearch] = useState(false);
 
   // сохраняю запрос для localstorage
   function handleSetQueryValue(e) {
     setQuery(e.target.value);
-
+    setIsSearch(true);
   }
   // сабмит
   function handleSubmitForm(e) {
@@ -25,7 +26,7 @@ function SearchForm({onFindMovie, isShortMovie, onStartFilter}) {
     }
   }
 
-
+  
 
   return (
     <div className="search-container">
@@ -39,7 +40,9 @@ function SearchForm({onFindMovie, isShortMovie, onStartFilter}) {
               id="search__input"
               type="text"
               placeholder="Фильм"
-              onChange={(e) => handleSetQueryValue(e)}
+              onChange={(e) => {
+                handleSetQueryValue(e);
+              }}
               value={query}
             ></input>
             <button className="search__btn" type="submit">

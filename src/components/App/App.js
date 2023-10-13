@@ -86,8 +86,14 @@ function App() {
   const handleSaveMovies = (movie) => {
     mainApi
       .setSavedMovies(movie)
-      .then((res) => { 
-        setSavedMovies([res, ...savedMovies]);
+      .then((res) => {
+        console.log(res._id);
+        if (Array.isArray(savedMovies)) {
+          setSavedMovies([res, ...savedMovies]);
+        } else {
+          setSavedMovies([res]);
+        }
+        console.log(savedMovies);
       })
       .catch((err) => {
         console.log(err);
@@ -96,14 +102,14 @@ function App() {
 
   const handleDeleteMovie = (movie) => {
     console.log(movie._id);
-    mainApi.deleteMovie(movie._id).then(() => {
-      setSavedMovies((state) => {
-        state.filter((elem) => elem._id !== movie._id);
+    mainApi
+      .deleteMovie(movie._id)
+      .then(() => {
+        setSavedMovies(savedMovies.filter((elem) => elem !== movie));
+      })
+      .catch((err) => {
+        console.log(err);
       });
-    })
-    .catch((err) => {
-      console.log(err);
-    })
   };
 
   const signOut = () => {

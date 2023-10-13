@@ -36,7 +36,7 @@ function MoviesCard({ movie, onSavedMovies, onDeleteMovie }) {
       onMouseLeave={deleteButton}
     >
       <a className="card__movie-link" target="_blank" href={movie.trailerLink}>
-        <img src={movieImgUrl} alt={movie.nameRU} className="card__img" />
+        <img src={location.pathname === '/saved-movies' ? movie.image : movieImgUrl} alt={movie.nameRU} className="card__img" />
       </a>
       {location.pathname === "/movies" &&
         showBtn == true &&

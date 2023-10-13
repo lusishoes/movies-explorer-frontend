@@ -8,6 +8,29 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
 
+  // useEffect(() => {
+  //   if (windowWidth > 1150) {
+  //     if(movies.length > 12) {
+  //       setmovieQuantity(12);
+  //     } else {
+  //       setmovieQuantity(movies.length);
+  //     }
+  //   } else if (windowWidth > 720) {
+  //     if(movies.length > 8) {
+  //       setmovieQuantity(8);
+  //     } else {
+  //       setmovieQuantity(movies.length);
+  //     }
+  //   } else {
+  //     if(movies.length > 5) {
+  //       setmovieQuantity(5);
+  //     } else {
+  //       setmovieQuantity(movies.length);
+  //     }
+  //   }
+  // }, [windowWidth]);
+
+
   useEffect(() => {
     if (windowWidth > 1150) {
       setmovieQuantity(12);
@@ -17,13 +40,21 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
       setmovieQuantity(5);
     }
   }, [windowWidth]);
-  // useEffect(() => {
 
-  // }, [isLoggedIn])
+
+  function handleLoadCrads() {
+    if (windowWidth > 1150) {
+      setmovieQuantity(movieQuantity + 3);
+    } else if (windowWidth > 720) {
+      setmovieQuantity(movieQuantity + 2);
+    } else {
+      setmovieQuantity(movieQuantity + 2);
+    }
+  }
 
   return (
     <div className="cards">
-      <div className="cards__list">
+      <div className="cards__list" onClick={() => console.log(movies.length, movieQuantity)}>
         {Array.isArray(movies) && movies.slice(0, movieQuantity).map((movie, id) => {
           return (
             <MoviesCard
@@ -34,7 +65,7 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies }) {
           );
         })}
       </div>
-      <CardsLoader />
+      {movies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
     </div>
   );
 }
