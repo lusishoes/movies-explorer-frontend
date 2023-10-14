@@ -71,7 +71,7 @@ function App() {
         setIsLoggedIn(true);
         setisInfoTooltipOpen(true);
         setIsInfoTooltip(true);
-        navigate("/");
+        navigate("/movies");
       })
       .catch((err) => {
         console.log(err);
