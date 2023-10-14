@@ -11,6 +11,7 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   const [searchedMovies, setSearchedMovies] = useState([]);
   const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([]);
   const [query, setQuery] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   function movieDuratationCounter(movies) {
     return movies.filter((movie) => movie.duration <= 40);
   }
@@ -31,7 +32,7 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
       isShortMovie ? movieDuratationCounter(moviesList) : moviesList
     );
     localStorage.setItem("movies", JSON.stringify(moviesList));
-    localStorage.setItem("allFilms", JSON.stringify(movies));
+    // localStorage.setItem("allFilms", JSON.stringify(movies));
   }
 
   function handleShortMovies() {
@@ -47,25 +48,30 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
     }
     localStorage.setItem("isShortMovie", !isShortMovie);
   }
-
+  // поиск фильмов
   function findMovie(query) {
     setQuery(query);
-    localStorage.setItem("query", query);
-    localStorage.setItem("isShortMovie", isShortMovie);
-    if (localStorage.getItem("allFilms")) {
-      const movies = JSON.parse(localStorage.getItem("allFilms"));
-      handleMoviesFilter(movies, query, isShortMovie);
-    } else {
-      console.log("esdf");
-      moviesApi
-        .getMovies()
-        .then((res) => {
-          handleMoviesFilter(res, query, isShortMovie);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    setIsLoading(true);
+      localStorage.setItem("query", query);
+      localStorage.setItem("isShortMovie", isShortMovie);
+      // if (localStorage.getItem("allFilms")) {
+      //   const movies = JSON.parse(localStorage.getItem("allFilms"));
+      //   handleMoviesFilter(movies, query, isShortMovie);
+      //   setIsLoading(false);
+      // } else {
+        setIsLoading(true);
+        moviesApi
+          .getMovies()
+          .then((res) => {
+            handleMoviesFilter(res, query, isShortMovie);
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+          .finally(() => {
+            setIsLoading(false);
+          })
+      // }
   }
 
   useEffect(() => {
@@ -103,6 +109,7 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
         onQuery={query}
         onDeleteMovie={onDeleteMovie}
         savedMovies={savedMovies}
+        isLoading={isLoading}
       />
       <Footer />
     </>

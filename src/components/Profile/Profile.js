@@ -6,29 +6,31 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from "../../hooks/useForm";
 
 function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
-  const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm } =
-    useFormWithValidation();
-  const [isEquals, setisEquals] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const currentUser = useContext(CurrentUserContext); // текущий контекст
+  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation(); // валидация 
+  const [isEquals, setisEquals] = useState(true); // изменились ли значения
+  const [isDisabled, setIsDisabled] = useState(true); // заблокированы ли инпуты
 
   // выход из аккаунт
   const signOut = () => {
     onSignOut();
+    resetForm();
   };
   // обновление инфрмации о юзере
   function updateUserInfo(e) {
     e.preventDefault();
-    if (isEquals === false) {
+    setIsDisabled(!isDisabled);
+    // if (isEquals === false) {
       const name = values.name;
       const email = values.email;
       console.log(email);
       handleUpdateUser(name, email);
-    }
-    setIsDisabled(!isDisabled);
+    // }
+    
     setisEquals(false);
   }
 
+  // проверяю изменились ли значения
   function handleCheckEquals() {
     let name = values.name == currentUser.name;
     let email = values.email == currentUser.email;
@@ -43,7 +45,7 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
   return (
     <>
       <Header isLoggedIn={isLoggedIn} />
-      <form className="profile_container" noValidate onSubmit={updateUserInfo}>
+      <form className="profile_container" onSubmit={(e) => updateUserInfo(e)} noValidate>
         <h2 className="profile__greetings">{`Привет, ${currentUser.name}!`}</h2>
         <div className="profile__info">
           <div className="profile__wrapper">
@@ -53,7 +55,7 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
               className="profile__value"
               value={isDisabled === true ? currentUser.name : values.name}
               onChange={(e) => {
-                handleChange(e);
+                handleChange(e); 
                 handleCheckEquals();
               }}
               type="text"
@@ -88,13 +90,9 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
           <span className="profile__validation">{errors.email}</span>
         </div>
         <button
-          className={`profile__edit ${
-            (isEquals !== true && isValid === true) || isDisabled === false
-              ? ""
-              : "profile__edit-disabled"
-          }`}
+          className={`profile__edit`}
           type="submit"
-          //onClick={updateUserInfo}
+          //onClick={(e) => updateUserInfo(e)}
           disabled={!isValid || isEquals}
         >
           Редактировать
@@ -109,3 +107,8 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
 
 export default Profile;
 // (isEquals === true || !isValid) || isDisabled===false
+//${
+//   isEquals !== true && isValid === true
+//   ? "profile__edit-disabled"
+//   : ""
+// }

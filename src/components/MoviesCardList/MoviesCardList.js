@@ -4,7 +4,8 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 import EmptyComponent from "../EmptyComponent/EmptyComponent";
 import CardsLoader from "../CradsLoader/CardsLoader";
 import useWindowWidth from "../../hooks/useWindowWidth";
-function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMovie, savedMovies}) {
+import Preloader from '../Preloader/Preloader';
+function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMovie, savedMovies, isLoading}) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
 
@@ -35,7 +36,7 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMo
   return (
     <div className="cards">
       <div className="cards__list">
-        {Array.isArray(movies) && movies.slice(0, movieQuantity).map((movie, id) => {
+        {isLoading === false && Array.isArray(movies) && movies.slice(0, movieQuantity).map((movie, id) => {
           return (
             <MoviesCard
               movie={movie}
@@ -47,8 +48,9 @@ function MoviesCardList({ isLoggedIn, movies, onSavedMovies, onQuery, onDeleteMo
           );
         })}
       </div>
-      {movies.length === 0 && onQuery.length > 0 ? <EmptyComponent /> : ''}
-      {movies.length > movieQuantity ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
+      {isLoading === true ? <Preloader /> : ''}
+      {movies.length === 0 && onQuery.length > 0 && isLoading === false ? <EmptyComponent /> : ''}
+      {movies.length > movieQuantity && isLoading === false ? <CardsLoader loadCrads={handleLoadCrads} /> : ''}
     </div>
   );
 }
