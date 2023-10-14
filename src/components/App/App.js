@@ -18,27 +18,30 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
-  const [data, setData] = useState({});
+  // const [data, setData] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
   // проверка наличия токена для авторизации
   const checkToken = () => {
     const jwt = localStorage.getItem("jwt");
-    mainApi
+    if(jwt) {
+      mainApi
       .getContent(jwt)
       .then((data) => {
         if (!data) {
           return;
         }
-        setData(data);
+        // setData(data);
         setIsLoggedIn(true);
         navigate("/");
       })
-      .catch((e) => {
+      .catch((err) => {
         setIsLoggedIn(false);
-        console.log(e);
+        console.log(err);
+
       });
+    }
   };
   // проверка токена при монтировании компонента
   useEffect(() => {
@@ -67,6 +70,7 @@ function App() {
     mainApi
       .login(password, email)
       .then((data) => {
+        console.log(data.token);
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
         navigate("/");
@@ -99,8 +103,11 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+     
       });
   };
+
+
   // удаляю фильмы со своего сервера
   const handleDeleteMovie = (movie) => {
     console.log(movie);
@@ -138,14 +145,16 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-
-      mainApi.getMovies()
-        .then((res) => {
-          setSavedMovies(res)
-        })
-        .catch((err) => {
-          console.log(err);
-        })
+        if(savedMovies.length > 0) {
+          mainApi
+          .getMovies()
+          .then((res) => {
+            setSavedMovies(res);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+        }
     }
   }, [isLoggedIn]);
 

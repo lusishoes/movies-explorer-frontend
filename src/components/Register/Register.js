@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Register.css";
 import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
@@ -9,8 +9,9 @@ function Register({ onRegister }) {
 
   const handleRegister = (e) => {
     e.preventDefault();
-    onRegister(values.name, values.email, values.password);
-    resetForm();
+      console.log(values.name, values.email, values.password)
+      onRegister(values.name, values.email, values.password);
+      resetForm();
   };
 
   return (
@@ -18,7 +19,8 @@ function Register({ onRegister }) {
       <form
         className={`register_container`}
         name={`register__container`}
-        onSubmit={isValid ? handleRegister : ''}
+        onSubmit={(e) => handleRegister(e)}
+        noValidate
       >
         <img src={logo} alt="логотип" className="register__logo" />
         <h3 className="register__title">Добро пожаловать!</h3>
@@ -31,7 +33,7 @@ function Register({ onRegister }) {
           minLength="2"
           maxLength="30"
           required={true}
-          value={values?.name}
+          value={values.name}
           onChange={(e) =>  handleChange(e)}
         />
         <span
@@ -68,10 +70,10 @@ function Register({ onRegister }) {
         <span
           className="register__input-error"
         >{errors?.password}</span>
-        <button className="register__button" type="submit">
+        <button className={`register__button  ${isValid ? '' : "register__link-disabled"}`}  type="submit" disabled={isValid !== true ? true : false}>
           Зарегистрироваться
         </button>
-        <Link to="/signin" className={`register__link  ${isValid ? '' : "register__link-disabled"}`} onClick={() => console.log(errors)}>
+        <Link to="/signin" className="register__link">
           Уже зарегистрированы? <p className="register__link-signin">Войти</p>
         </Link>
       </form>

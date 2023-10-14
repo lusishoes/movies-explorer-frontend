@@ -40,7 +40,7 @@
 
 .register__link-disabled {
   cursor: default;
-
+  opacity: 0.8;
 }
 
 .register__subtitle:first-of-type {
@@ -73,7 +73,6 @@
 }
 
 .register__button:hover {
-  opacity: 0.7;
   opacity: 0.7;
 }
 
