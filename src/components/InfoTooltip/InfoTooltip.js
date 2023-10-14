@@ -8,7 +8,7 @@ function InfoTooltip({  isOpen, onClose, messegeState}) {
             <div className='popup__container popup__container_theme_infoTooltip'>
             <button className="popup__close-icon" type="reset" onClick={onClose}/>
                 <img src={messegeState ? success : fail} className='popup__info-img'/>
-                <p className='popup__info-message'>{messegeState ? 'Вы успешно зарегистрировались!' : 'Что-то пошло не так! Попробуйте ещё раз.'}</p>
+                <p className='popup__info-message'>{messegeState ? 'Успех!' : 'Что-то пошло не так! Попробуйте ещё раз.'}</p>
             </div>
         </section>
     )

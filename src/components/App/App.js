@@ -73,9 +73,15 @@ function App() {
         console.log(data.token);
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
+        setisInfoTooltipOpen(true);
+        setIsInfoTooltip(true);
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        setisInfoTooltipOpen(true);
+        setIsInfoTooltip(false);
+      });
   };
   // отпраляю новые email, name на сервер, получаю -> устанавливаю их для currentUser
   const handleUpdateUser = (name, email) => {
@@ -83,9 +89,13 @@ function App() {
       .setUserInfo(name, email)
       .then((res) => {
         setCurrentUser(res);
+        setisInfoTooltipOpen(true);
+        setIsInfoTooltip(true);
       })
       .catch((err) => {
         console.log(err);
+        setisInfoTooltipOpen(true);
+        setIsInfoTooltip(false);
       });
   };
   // сохраняю фильмы на своем сервере
