@@ -14,7 +14,6 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
   const [isShortMovie, setIsShortMovie] = useState(false); // +
   const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([]); // если был поиск отфильтрованные фильмы
   const [moviesQuery, setMoviesQuery] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   function filterMovies(savedMovies, query) {
     return savedMovies.filter(
@@ -73,7 +72,6 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
     <>
       <Header isLoggedIn={isLoggedIn} />
       <section className="saved_movies">
-        {/* onFindMovie - сам поисковой запрос, isShortMovie если checked то true, при изменении чекбокса handleShortMovies*/}
         <SearchForm
           onFindMovie={findMovie} // тут идет query
           isShortMovie={isShortMovie} // тут идет переключатель коротких фильмов
@@ -83,9 +81,7 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
           className="saved_movies__list"
           onClick={() => console.log(searchedFilteredMovies.length)}
         >
-          {isLoading === false &&
-          searchedFilteredMovies.length === 0 &&
-          moviesQuery.length === 0
+          {searchedFilteredMovies.length === 0 && moviesQuery.length === 0
             ? Array.isArray(savedMovies) &&
               savedMovies.slice(0, movieQuantity).map((movie, id) => {
                 return (
@@ -98,7 +94,7 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
               })
             : ""}
           {/* тут если не было поиска */}
-          {isLoading === false && searchedFilteredMovies.length > 0
+          {searchedFilteredMovies.length > 0
             ? Array.isArray(searchedFilteredMovies) &&
               searchedFilteredMovies
                 .slice(0, movieQuantity)
@@ -115,15 +111,12 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
             : ""}
         </div>
       </section>
-      {isLoading === true ? <Preloader /> : ""}
-      {searchedFilteredMovies.length === 0 &&
-      moviesQuery.length > 0 &&
-      isLoading === false ? (
+      {searchedFilteredMovies.length === 0 && moviesQuery.length > 0 ? (
         <EmptyComponent />
       ) : (
         ""
       )}
-      {searchedFilteredMovies.length > movieQuantity && isLoading === false ? (
+      {searchedFilteredMovies.length > movieQuantity ? (
         <CardsLoader loadCrads={handleLoadCrads} />
       ) : (
         ""

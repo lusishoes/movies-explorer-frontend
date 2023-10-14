@@ -1,10 +1,8 @@
-import React from 'react'
-import './EmptyComponent.css';
+import React from "react";
+import "./EmptyComponent.css";
 
 function EmptyComponent() {
-  return (
-    <div className='empty-text'>Ничего не найдено</div>
-  )
+  return <div className="empty-text">Ничего не найдено</div>;
 }
 
-export default EmptyComponent
+export default EmptyComponent;

@@ -33,7 +33,7 @@ function Register({ onRegister }) {
           minLength="2"
           maxLength="30"
           required={true}
-          value={values.name}
+          value={values?.name || ''}
           onChange={(e) =>  handleChange(e)}
         />
         <span
@@ -50,7 +50,7 @@ function Register({ onRegister }) {
           minLength="2"
           maxLength="30"
           pattern="[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-z]{2,4}$"
-          value={values?.email}
+          value={values?.email  || ''}
           onChange={(e) => handleChange(e)}
         />
         <span
@@ -64,7 +64,7 @@ function Register({ onRegister }) {
           className="register__input"
           name="password"
           required={true}
-          value={values?.password}
+          value={values?.password || ''}
           onChange={(e) => handleChange(e)}
         />
         <span

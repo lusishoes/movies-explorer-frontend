@@ -18,29 +18,26 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isInfoTooltip, setIsInfoTooltip] = useState(false);
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
-  // const [data, setData] = useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
 
   // проверка наличия токена для авторизации
   const checkToken = () => {
     const jwt = localStorage.getItem("jwt");
-    if(jwt) {
+    if (jwt) {
       mainApi
-      .getContent(jwt)
-      .then((data) => {
-        if (!data) {
-          return;
-        }
-        // setData(data);
-        setIsLoggedIn(true);
-        navigate("/");
-      })
-      .catch((err) => {
-        setIsLoggedIn(false);
-        console.log(err);
-
-      });
+        .getContent(jwt)
+        .then((data) => {
+          if (!data) {
+            return;
+          }
+          setIsLoggedIn(true);
+          navigate("/");
+        })
+        .catch((err) => {
+          setIsLoggedIn(false);
+          console.log(err);
+        });
     }
   };
   // проверка токена при монтировании компонента
@@ -70,7 +67,6 @@ function App() {
     mainApi
       .login(password, email)
       .then((data) => {
-        console.log(data.token);
         localStorage.setItem("jwt", data.token);
         setIsLoggedIn(true);
         setisInfoTooltipOpen(true);
@@ -103,20 +99,16 @@ function App() {
     mainApi
       .setSavedMovies(movie)
       .then((res) => {
-        // console.log(res._id);
         if (Array.isArray(savedMovies)) {
           setSavedMovies([res, ...savedMovies]);
         } else {
           setSavedMovies([res]);
         }
-        // console.log(savedMovies);
       })
       .catch((err) => {
         console.log(err);
-     
       });
   };
-
 
   // удаляю фильмы со своего сервера
   const handleDeleteMovie = (movie) => {
@@ -155,8 +147,8 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-        if(savedMovies.length > 0) {
-          mainApi
+      if (savedMovies.length > 0) {
+        mainApi
           .getMovies()
           .then((res) => {
             setSavedMovies(res);
@@ -164,9 +156,9 @@ function App() {
           .catch((err) => {
             console.log(err);
           });
-        }
+      }
     }
-  }, [isLoggedIn]);
+  }, [isLoggedIn, navigate]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>

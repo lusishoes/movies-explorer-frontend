@@ -32,7 +32,6 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
       isShortMovie ? movieDuratationCounter(moviesList) : moviesList
     );
     localStorage.setItem("movies", JSON.stringify(moviesList));
-    // localStorage.setItem("allFilms", JSON.stringify(movies));
   }
 
   function handleShortMovies() {
@@ -52,26 +51,20 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   function findMovie(query) {
     setQuery(query);
     setIsLoading(true);
-      localStorage.setItem("query", query);
-      localStorage.setItem("isShortMovie", isShortMovie);
-      // if (localStorage.getItem("allFilms")) {
-      //   const movies = JSON.parse(localStorage.getItem("allFilms"));
-      //   handleMoviesFilter(movies, query, isShortMovie);
-      //   setIsLoading(false);
-      // } else {
-        setIsLoading(true);
-        moviesApi
-          .getMovies()
-          .then((res) => {
-            handleMoviesFilter(res, query, isShortMovie);
-          })
-          .catch((err) => {
-            console.log(err);
-          })
-          .finally(() => {
-            setIsLoading(false);
-          })
-      // }
+    localStorage.setItem("query", query);
+    localStorage.setItem("isShortMovie", isShortMovie);
+    setIsLoading(true);
+    moviesApi
+      .getMovies()
+      .then((res) => {
+        handleMoviesFilter(res, query, isShortMovie);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   }
 
   useEffect(() => {

@@ -2,31 +2,26 @@ import React, { useState } from "react";
 import "./SearchForm.css";
 import lupaimg from "../../images/lupaicon.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import { useLocation } from "react-router-dom";
-function SearchForm({onFindMovie, isShortMovie, onStartFilter}) {
+
+function SearchForm({ onFindMovie, isShortMovie, onStartFilter }) {
   const [query, setQuery] = useState("");
   const [isError, setIsError] = useState(false);
-  const location = useLocation();
-  const [isSearch, setIsSearch] = useState(false);
 
   // сохраняю запрос для localstorage
   function handleSetQueryValue(e) {
     setQuery(e.target.value);
-    setIsSearch(true);
   }
   // сабмит
   function handleSubmitForm(e) {
     e.preventDefault();
-    if(query.length === 0) {
+    if (query.length === 0) {
       setIsError(true);
-      console.log(isError)
+      console.log(isError);
     } else {
       setIsError(false);
       onFindMovie(query);
     }
   }
-
-  
 
   return (
     <div className="search-container">
@@ -50,11 +45,16 @@ function SearchForm({onFindMovie, isShortMovie, onStartFilter}) {
             </button>
           </div>
         </form>
-        <FilterCheckbox isShortMovie={isShortMovie} onStartFilter={onStartFilter}/>
+        <FilterCheckbox
+          isShortMovie={isShortMovie}
+          onStartFilter={onStartFilter}
+        />
       </div>
-      {
-        isError ? <span className="search__validator">Введите хоть что нибудь</span> : ''
-      }
+      {isError ? (
+        <span className="search__validator">Введите хоть что нибудь</span>
+      ) : (
+        ""
+      )}
       <div className="search-container-bottom-line"></div>
     </div>
   );

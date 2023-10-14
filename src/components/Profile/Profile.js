@@ -7,28 +7,27 @@ import { useFormWithValidation } from "../../hooks/useForm";
 
 function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
   const [isEquals, setisEquals] = useState(true);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isDisabledBtn, setIsDisabledBtn] = useState(false);
+
   const signOut = () => {
     onSignOut();
-    resetForm();
+    resetForm(currentUser);
   };
 
   function updateUserInfo(e) {
     e.preventDefault();
-    if (values.name !== currentUser.name || values.email !== currentUser.email) {
+    if (
+      values.name !== currentUser.name ||
+      values.email !== currentUser.email
+    ) {
       const name = values.name;
       const email = values.email;
       handleUpdateUser(name, email);
     }
     setIsDisabled(!isDisabled);
-  }
-
-  function checkBtnState() {
-    const btnStatus = isEquals === false;
-    setIsDisabledBtn(btnStatus);
   }
 
   function handleCheckEquals() {
@@ -40,7 +39,7 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
   useEffect(() => {
     values.name = currentUser.name;
     values.email = currentUser.email;
-  }, [isLoggedIn]);
+  }, []);
 
   return (
     <>
@@ -90,9 +89,17 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
           <span className="profile__validation">{errors?.email}</span>
         </div>
         <button
-          className={`profile__edit ${(isEquals === false && isValid === true) || (isDisabled === true) ? '' : "profile__edit-disabled"}`}
+          className={`profile__edit ${
+            (isEquals === false && isValid === true) || isDisabled === true
+              ? ""
+              : "profile__edit-disabled"
+          }`}
           type="submit"
-          disabled={(isEquals === false && isValid === true) || (isDisabled === true) ?  false : true}
+          disabled={
+            (isEquals === false && isValid === true) || isDisabled === true
+              ? false
+              : true
+          }
         >
           Редактировать
         </button>

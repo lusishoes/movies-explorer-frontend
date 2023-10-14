@@ -4,12 +4,13 @@ import { Link } from "react-router-dom";
 import logo from "../../images/logo.svg";
 import { useFormWithValidation } from "../../hooks/useForm";
 function Login({ onLogin }) {
-  const { values, handleChange, errors, isValid, resetForm } = useFormWithValidation();
+  const { values, handleChange, errors, isValid, resetForm } =
+    useFormWithValidation();
 
   const handleLogin = (e) => {
     e.preventDefault();
-      onLogin(values.password, values.email);
-      resetForm();
+    onLogin(values.password, values.email);
+    resetForm();
   };
 
   return (
@@ -32,12 +33,10 @@ function Login({ onLogin }) {
           onChange={(e) => handleChange(e)}
           minLength="2"
           maxLength="30"
-          value={values.email || ''}
+          value={values.email || ""}
           pattern="[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-z]{2,4}$"
         />
-        <span className="login__input-error">
-          {errors?.email}
-        </span>
+        <span className="login__input-error">{errors?.email}</span>
         <p className="login__subtitle">Пароль</p>
         <input
           type="password"
@@ -45,16 +44,18 @@ function Login({ onLogin }) {
           className="login__input"
           name="password"
           required={true}
-          value={values.password || ''}
+          value={values.password || ""}
           onChange={(e) => handleChange(e)}
         />
-        <span className="login__input-error">
-          {errors?.password}
-        </span>
-        <button className={`login__button ${isValid ? '' : "login__button-disabled"}`} type="submit"  disabled={isValid !== true ? true : false}>
+        <span className="login__input-error">{errors?.password}</span>
+        <button
+          className={`login__button ${isValid ? "" : "login__button-disabled"}`}
+          type="submit"
+          disabled={isValid !== true ? true : false}
+        >
           Войти
         </button>
-        <Link to="/signup" className="login__link" >
+        <Link to="/signup" className="login__link">
           Ещё не зарегистрированы?
           <p className="login__link-signin">Регистрация</p>
         </Link>
