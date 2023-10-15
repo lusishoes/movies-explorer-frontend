@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import EmptyComponent from "../EmptyComponent/EmptyComponent";
 import CardsLoader from "../CradsLoader/CardsLoader";
-import Preloader from "../Preloader/Preloader";
+
 function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();

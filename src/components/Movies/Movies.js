@@ -12,11 +12,11 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
   function movieDuratationCounter(movies) {
     return movies.filter((movie) => movie.duration <= 40);
   }
 
-  // осущесвляем запрос
   function filterMovies(movies, query) {
     return movies.filter(
       (movie) =>
@@ -27,7 +27,7 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
 
   function handleMoviesFilter(movies, query, isShortMovie) {
     const moviesList = filterMovies(movies, query);
-    setSearchedMovies(moviesList); // возвращаем отфильтрованные
+    setSearchedMovies(moviesList);
     setSearchedFilteredMovies(
       isShortMovie ? movieDuratationCounter(moviesList) : moviesList
     );
@@ -37,16 +37,13 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   function handleShortMovies() {
     setIsShortMovie(!isShortMovie);
     if (!isShortMovie) {
-      if (movieDuratationCounter(searchedMovies).length === 0) {
-        setSearchedFilteredMovies(movieDuratationCounter(searchedMovies));
-      } else {
-        setSearchedFilteredMovies(movieDuratationCounter(searchedMovies));
-      }
+      setSearchedFilteredMovies(movieDuratationCounter(searchedMovies));
     } else {
       setSearchedFilteredMovies(searchedMovies);
     }
     localStorage.setItem("isShortMovie", !isShortMovie);
   }
+
   // поиск фильмов
   function findMovie(query) {
     setQuery(query);
@@ -68,14 +65,6 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   }
 
   useEffect(() => {
-    if (localStorage.getItem("isShortMovie") === "true") {
-      setIsShortMovie(true);
-    } else {
-      setIsShortMovie(false);
-    }
-  }, []);
-
-  useEffect(() => {
     if (localStorage.getItem("movies")) {
       const movies = JSON.parse(localStorage.getItem("movies"));
       setSearchedMovies(movies);
@@ -84,6 +73,11 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
       } else {
         setSearchedFilteredMovies(movies);
       }
+    }
+    if (localStorage.getItem("isShortMovie") === "true") {
+      setIsShortMovie(true);
+    } else {
+      setIsShortMovie(false);
     }
   }, []);
 
