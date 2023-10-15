@@ -14,7 +14,8 @@ export const getMovies = () =>{
   return fetch(BASE_URL, {
     method: "GET",
     headers: {
-      "Content-Type": "application/json",
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
     },
   }).then(handleResponse);
 }
