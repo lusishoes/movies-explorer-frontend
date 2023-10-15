@@ -50,7 +50,6 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
     setIsLoading(true);
     localStorage.setItem("query", query);
     localStorage.setItem("isShortMovie", isShortMovie);
-    setIsLoading(true);
     moviesApi
       .getMovies()
       .then((res) => {
