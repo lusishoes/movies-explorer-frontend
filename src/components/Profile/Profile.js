@@ -14,7 +14,7 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
 
   const signOut = () => {
     onSignOut();
-    resetForm(currentUser);
+    resetForm();
   };
 
   function updateUserInfo(e) {
