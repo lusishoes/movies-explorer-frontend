@@ -124,11 +124,6 @@ function App() {
   };
   // при выходе чищу локалстордж
   const signOut = () => {
-    localStorage.removeItem("jwt");
-    localStorage.removeItem("movies");
-    localStorage.removeItem("allFilms");
-    localStorage.removeItem("isShortMovie");
-    localStorage.removeItem("query");
     localStorage.clear();
     navigate("/");
   };
