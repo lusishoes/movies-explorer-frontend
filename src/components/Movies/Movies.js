@@ -13,6 +13,23 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
+  useEffect(() => {
+    if (localStorage.getItem("movies")) {
+      const movies = JSON.parse(localStorage.getItem("movies"));
+      setSearchedMovies(movies);
+      if (localStorage.getItem("isShortMovie") === "true") {
+        setSearchedFilteredMovies(movieDuratationCounter(movies));
+      } else {
+        setSearchedFilteredMovies(movies);
+      }
+    }
+    if (localStorage.getItem("isShortMovie") === "true") {
+      setIsShortMovie(true);
+    } else {
+      setIsShortMovie(false);
+    }
+  }, []);
+
   function movieDuratationCounter(movies) {
     return movies.filter((movie) => movie.duration <= 40);
   }
@@ -62,23 +79,6 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
         setIsLoading(false);
       });
   }
-
-  useEffect(() => {
-    if (localStorage.getItem("movies")) {
-      const movies = JSON.parse(localStorage.getItem("movies"));
-      setSearchedMovies(movies);
-      if (localStorage.getItem("isShortMovie") === "true") {
-        setSearchedFilteredMovies(movieDuratationCounter(movies));
-      } else {
-        setSearchedFilteredMovies(movies);
-      }
-    }
-    if (localStorage.getItem("isShortMovie") === "true") {
-      setIsShortMovie(true);
-    } else {
-      setIsShortMovie(false);
-    }
-  }, []);
 
   return (
     <>
