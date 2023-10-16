@@ -54,7 +54,8 @@ function App() {
         console.log(res.status);
         setisInfoTooltipOpen(true);
         setIsInfoTooltip(true);
-        navigate("/signin");
+        handleOnLogin(password, email)
+        navigate("/movies");
       })
       .catch((err) => {
         setisInfoTooltipOpen(true);

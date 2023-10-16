@@ -15,21 +15,21 @@ function MoviesCardList({
 }) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
-
+// ADD:
   useEffect(() => {
-    if (windowWidth > 1150) {
+    if (windowWidth > 1280) {
       setmovieQuantity(12);
-    } else if (windowWidth > 720) {
+    } else if (windowWidth > 768) {
       setmovieQuantity(8);
     } else {
       setmovieQuantity(5);
     }
   }, [windowWidth]);
-
+// ADD:
   function handleLoadCrads() {
-    if (windowWidth > 1150) {
+    if (windowWidth > 1280) {
       setmovieQuantity(movieQuantity + 3);
-    } else if (windowWidth > 720) {
+    } else if (windowWidth > 768) {
       setmovieQuantity(movieQuantity + 2);
     } else {
       setmovieQuantity(movieQuantity + 2);

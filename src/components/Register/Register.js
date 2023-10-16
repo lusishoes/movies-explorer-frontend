@@ -22,7 +22,8 @@ function Register({ onRegister }) {
         onSubmit={(e) => handleRegister(e)}
         noValidate
       >
-        <img src={logo} alt="логотип" className="register__logo" />
+        {/* ADD: */}
+         <Link to={'/'}><img src={logo} alt="логотип" className="register__logo" /></Link>
         <h3 className="register__title">Добро пожаловать!</h3>
         <p className="register__subtitle">Имя</p>
         <input

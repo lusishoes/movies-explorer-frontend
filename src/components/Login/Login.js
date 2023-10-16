@@ -21,7 +21,8 @@ function Login({ onLogin }) {
         onSubmit={(e) => handleLogin(e)}
         noValidate
       >
-        <img src={logo} alt="логотип" className="login__logo" />
+        {/* ADD: */}
+        <Link to={'/'}><img src={logo} alt="логотип" className="login__logo" /></Link>
         <h3 className="login__title">Рады видеть!</h3>
         <p className="login__subtitle">E-mail</p>
         <input

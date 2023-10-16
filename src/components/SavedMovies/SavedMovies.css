@@ -10,7 +10,7 @@
 }
 
 
-@media screen and (max-width: 1150px) {
+@media screen and (min-width: 768px) and (max-width: 1279px) {
   .saved_movies__list {
     grid-template-columns: repeat(2, 339px);
     row-gap: 47px;
@@ -18,7 +18,7 @@
   }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 767px) {
   .saved_movies__list {
     grid-template-columns: repeat(1, 300px);
     row-gap: 39px;
