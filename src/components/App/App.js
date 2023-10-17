@@ -5,7 +5,7 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import Footer from "../Footer/Footer";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Route, Routes, useNavigate, Navigate, useLocation } from "react-router-dom";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import Profile from "../Profile/Profile";
@@ -20,7 +20,8 @@ function App() {
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
-
+  // TODO: добавил
+  const location = useLocation();
   // проверка наличия токена для авторизации
   const checkToken = () => {
     const jwt = localStorage.getItem("jwt");
@@ -32,7 +33,8 @@ function App() {
             return;
           }
           setIsLoggedIn(true);
-          navigate("/");
+          // TODO: изменил редирект
+          navigate(location.pathname);
         })
         .catch((err) => {
           setIsLoggedIn(false);
@@ -54,8 +56,8 @@ function App() {
         console.log(res.status);
         setisInfoTooltipOpen(true);
         setIsInfoTooltip(true);
-        handleOnLogin(password, email)
-        navigate("/movies");
+        // TODO: добавил
+        handleOnLogin(password, email);
       })
       .catch((err) => {
         setisInfoTooltipOpen(true);
@@ -101,9 +103,11 @@ function App() {
       .setSavedMovies(movie)
       .then((res) => {
         if (Array.isArray(savedMovies)) {
-          setSavedMovies([res, ...savedMovies]);
+          // TODO: поменял
+          setSavedMovies(getUniqueMovies([res, ...savedMovies]));
         } else {
-          setSavedMovies([res]);
+          // TODO: поменял
+          setSavedMovies(getUniqueMovies([res]));
         }
       })
       .catch((err) => {
@@ -117,7 +121,7 @@ function App() {
     mainApi
       .deleteMovie(movie._id)
       .then(() => {
-        setSavedMovies(savedMovies.filter((elem) => elem !== movie));
+        setSavedMovies(getUniqueMovies(savedMovies.filter((elem) => elem !== movie)));
       })
       .catch((err) => {
         console.log(err);
@@ -125,6 +129,7 @@ function App() {
   };
   // при выходе чищу локалстордж
   const signOut = () => {
+    setIsLoggedIn(false);
     localStorage.clear();
     navigate("/");
   };
@@ -143,18 +148,31 @@ function App() {
         .catch((err) => {
           console.log(err);
         });
-      if (savedMovies.length > 0) {
+  
         mainApi
           .getMovies()
           .then((res) => {
-            setSavedMovies(res);
+            setSavedMovies(getUniqueMovies(res));
           })
           .catch((err) => {
             console.log(err);
           });
       }
+
+  }, [isLoggedIn]);
+
+  // TODO: добавил во избежание показа дубликатов - проблема на бэке, он не учитывает сценарий, при котором один и тот же фильм сохраняется несколько раз
+const getUniqueMovies = (movies) => {
+  const filtered = [];
+
+  for (const movie of movies) {
+    if (filtered.findIndex(m => m.trailerLink === movie.trailerLink) < 0) {
+      filtered.push(movie);
     }
-  }, [isLoggedIn, navigate]);
+  }
+
+  return filtered;
+};
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -171,9 +189,9 @@ function App() {
         />
         <Route
           path="/signup"
-          element={<Register onRegister={handleOnRegister} />}
+          element={!isLoggedIn ? <Register onRegister={handleOnRegister} /> : <Navigate to="/" replace />}
         />
-        <Route path="/signin" element={<Login onLogin={handleOnLogin} />} />
+        <Route path="/signin" element={!isLoggedIn ? <Login onLogin={handleOnLogin} /> : <Navigate to="/" replace />} />
         {/* Защитить */}
         <Route
           path="/profile"
