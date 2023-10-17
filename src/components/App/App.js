@@ -20,7 +20,6 @@ function App() {
   const [isInfoTooltipOpen, setisInfoTooltipOpen] = useState(false);
   const [savedMovies, setSavedMovies] = useState([]);
   const navigate = useNavigate();
-  // TODO: добавил
   const location = useLocation();
   // проверка наличия токена для авторизации
   const checkToken = () => {
@@ -33,7 +32,6 @@ function App() {
             return;
           }
           setIsLoggedIn(true);
-          // TODO: изменил редирект
           navigate(location.pathname);
         })
         .catch((err) => {
@@ -56,7 +54,6 @@ function App() {
         console.log(res.status);
         setisInfoTooltipOpen(true);
         setIsInfoTooltip(true);
-        // TODO: добавил
         handleOnLogin(password, email);
       })
       .catch((err) => {

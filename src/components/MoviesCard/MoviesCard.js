@@ -19,7 +19,7 @@ function MoviesCard({ movie, onSavedMovies, onDeleteMovie, savedMovies = [] }) {
   }
   useEffect(() => {
     getSavedMovieCard(savedMovies, movie);
-  });
+  }, [savedMovies]);
   // если карточка сохранена показываю галочку
   function getSavedMovieCard(savedMovies, movie) {
     if (

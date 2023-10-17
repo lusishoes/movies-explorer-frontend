@@ -17,7 +17,7 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
     onSignOut();
     resetForm();
   };
-
+  // обновляю инфу юзера
   function updateUserInfo(e) {
     e.preventDefault();
     if (
@@ -31,12 +31,11 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
       setisEquals(true);
     }
   }
-     // ADD:
+     // ADD: при изменении юзера устанавливаю вэлью
   useEffect(() => {
     setValues({ name: currentUser.name, email: currentUser.email });
   }, [currentUser]);
-
-  // TODO: оптимизировал проверку на равенство
+  // ADD: при изменении name или email проверяю равенство
   useEffect(() => {
     setisEquals(
       values.name === currentUser.name && values.email === currentUser.email
@@ -73,7 +72,6 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
             <input
               name="email"
               className="profile__value"
-              // TODO: убрал isDisabled
               value={values.email}
               onChange={(e) => {
                 handleChange(e);
@@ -88,7 +86,6 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
           <span className="profile__validation">{errors?.email}</span>
         </div>
         <button
-          // ADD:
           className={`profile__edit ${
             isEquals === false && isValid === true
               ? ""
@@ -96,7 +93,6 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
           }`}
           type="submit"
           disabled={
-            // ADD:
             isEquals === false && isValid === true ? false : true
           }
         >

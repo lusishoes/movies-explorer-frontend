@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./SearchForm.css";
 import lupaimg from "../../images/lupaicon.svg";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
-import { useLocation } from "react-router-dom";
-function SearchForm({ onFindMovie, isShortMovie, onStartFilter }) {
-  const [query, setQuery] = useState("");
+
+function SearchForm({
+  onFindMovie,
+  isShortMovie,
+  onStartFilter,
+  query,
+  setQuery,
+}) {
   const [isError, setIsError] = useState(false);
-  const location = useLocation();
 
   // сохраняю запрос для localstorage
   function handleSetQueryValue(e) {
@@ -23,14 +27,6 @@ function SearchForm({ onFindMovie, isShortMovie, onStartFilter }) {
       onFindMovie(query);
     }
   }
-
-    // ADD:
-    useEffect(() => {
-      if(location.pathname === '/movies' && localStorage.getItem('query')) {
-        const query = localStorage.getItem('query');
-        setQuery(query);
-      }
-    }, [location])
 
   return (
     <div className="search-container">

@@ -7,7 +7,7 @@ import Footer from "../Footer/Footer";
 import useWindowWidth from "../../hooks/useWindowWidth";
 import EmptyComponent from "../EmptyComponent/EmptyComponent";
 import CardsLoader from "../CradsLoader/CardsLoader";
-
+import { movieDuratationCounter, filterMoviesByQuery } from "../../utils/utils";
 function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
   const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
@@ -15,40 +15,31 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
   const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([]); // если был поиск отфильтрованные фильмы
   const [moviesQuery, setMoviesQuery] = useState("");
 
-  function filterMovies(savedMovies, query) {
-    return savedMovies.filter(
-      (savedMovie) =>
-        savedMovie.nameRU.toLowerCase().includes(query.toLowerCase()) ||
-        savedMovie.nameEN.toLowerCase().includes(query.toLowerCase())
-    );
-  }
-  // фильтруем по длине
-  function movieDuratationCounter(movies) {
-    return movies.filter((movie) => movie.duration <= 40);
-  }
-
   function findMovie(query) {
-    setMoviesQuery(query);
+    handleMoviesFilter(savedMovies, query, isShortMovie);
   }
 
   function handleShortMovie() {
     setIsShortMovie(!isShortMovie);
+    handleMoviesFilter(savedMovies, moviesQuery, !isShortMovie);
   }
 
   useEffect(() => {
-    const moviesList = filterMovies(savedMovies, moviesQuery); // отфильтрованный массив содержащий moviesQuery
-    if (movieDuratationCounter(moviesList).length > 0) {
-      setSearchedFilteredMovies(
-        // если короткие то фильтрация по длине с содержанием moviesQuery иначе просто moviesQuery
-        isShortMovie ? movieDuratationCounter(moviesList) : moviesList
-      );
-    } else {
-      setSearchedFilteredMovies(moviesList);
-      setIsShortMovie(false);
-    }
-  }, [savedMovies, isShortMovie, moviesQuery]);
-  
-// ADD:
+    const moviesList = filterMoviesByQuery(savedMovies, moviesQuery); // отфильтрованный массив содержащий moviesQuery
+    setSearchedFilteredMovies(
+      // если короткие то фильтрация по длине с содержанием moviesQuery иначе просто moviesQuery
+      isShortMovie ? movieDuratationCounter(moviesList) : moviesList
+    );
+  }, [savedMovies]);
+
+  function handleMoviesFilter(movies, query, isShortMovie) {
+    const moviesList = filterMoviesByQuery(movies, query);
+    setSearchedFilteredMovies(
+      isShortMovie ? movieDuratationCounter(moviesList) : moviesList
+    );
+  }
+
+  // ADD:
   useEffect(() => {
     if (windowWidth > 1280) {
       setmovieQuantity(12);
@@ -58,7 +49,7 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
       setmovieQuantity(5);
     }
   }, [windowWidth]);
-// ADD:
+  // ADD:
   function handleLoadCrads() {
     if (windowWidth > 1280) {
       setmovieQuantity(movieQuantity + 3);
@@ -74,6 +65,8 @@ function SavedMovies({ isLoggedIn, savedMovies, onDeleteMovie }) {
       <Header isLoggedIn={isLoggedIn} />
       <section className="saved_movies">
         <SearchForm
+          query={moviesQuery}
+          setQuery={setMoviesQuery}
           onFindMovie={findMovie} // тут идет query
           isShortMovie={isShortMovie} // тут идет переключатель коротких фильмов
           onStartFilter={handleShortMovie}
