@@ -5,7 +5,7 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import * as moviesApi from "../../utils/MoviesApi";
-
+import useWindowWidth from "../../hooks/useWindowWidth";
 function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   const [isShortMovie, setIsShortMovie] = useState(false);
   const [searchedMovies, setSearchedMovies] = useState([]);
