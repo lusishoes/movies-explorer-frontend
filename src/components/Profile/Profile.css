@@ -99,6 +99,11 @@
   background-color: transparent;
 }
 
+.profile__edit-disabled {
+  opacity: 0.7;
+  cursor: text;
+}
+
 .profile__logout {
   margin-top: 16px;
   text-decoration: none;

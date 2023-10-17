@@ -12,7 +12,10 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
   const [searchedFilteredMovies, setSearchedFilteredMovies] = useState([]);
   const [query, setQuery] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
+  // ADD:
+  const [movieQuantity, setmovieQuantity] = useState(0);
+ // ADD:
+  const windowWidth = useWindowWidth();
   useEffect(() => {
     if (localStorage.getItem("movies")) {
       const movies = JSON.parse(localStorage.getItem("movies"));
@@ -71,6 +74,14 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
       .getMovies()
       .then((res) => {
         handleMoviesFilter(res, query, isShortMovie);
+        // ADD:
+        if (windowWidth > 1280) {
+          setmovieQuantity(12);
+        } else if (windowWidth > 768) {
+          setmovieQuantity(8);
+        } else {
+          setmovieQuantity(5);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -96,6 +107,10 @@ function Movies({ isLoggedIn, onSavedMovies, onDeleteMovie, savedMovies }) {
         onDeleteMovie={onDeleteMovie}
         savedMovies={savedMovies}
         isLoading={isLoading}
+        // ADD:
+        movieQuantity={movieQuantity}
+       // ADD:
+        setmovieQuantity={setmovieQuantity}
       />
       <Footer />
     </>

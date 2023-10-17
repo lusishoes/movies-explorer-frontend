@@ -4,8 +4,8 @@ import saveimg from "../../images/cardiconimg.svg";
 import { useLocation } from "react-router-dom";
 import deleteimg from "../../images/deleteicon.svg";
 const API_URL = "https://api.nomoreparties.co";
-
-function MoviesCard({ movie, onSavedMovies, onDeleteMovie, savedMovies }) {
+// ADD:
+function MoviesCard({ movie, onSavedMovies, onDeleteMovie, savedMovies = [] }) {
   const location = useLocation();
   const [saveCard, setSaveCard] = useState(false); // сохранен ли фильм
   const [showBtn, setshowBtn] = useState(false); // показывается ли галочка

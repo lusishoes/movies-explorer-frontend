@@ -12,10 +12,13 @@ function MoviesCardList({
   onDeleteMovie,
   savedMovies,
   isLoading,
+  // ADD:
+  movieQuantity,
+ // ADD:
+  setmovieQuantity,
 }) {
-  const [movieQuantity, setmovieQuantity] = useState(0);
   const windowWidth = useWindowWidth();
-// ADD:
+  // ADD:
   useEffect(() => {
     if (windowWidth > 1280) {
       setmovieQuantity(12);
@@ -25,7 +28,7 @@ function MoviesCardList({
       setmovieQuantity(5);
     }
   }, [windowWidth]);
-// ADD:
+  // ADD:
   function handleLoadCrads() {
     if (windowWidth > 1280) {
       setmovieQuantity(movieQuantity + 3);

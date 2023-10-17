@@ -7,10 +7,11 @@ import { useFormWithValidation } from "../../hooks/useForm";
 
 function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
   const currentUser = useContext(CurrentUserContext);
-  const { values, handleChange, errors, isValid, resetForm } =
+  console.log("currentUser", currentUser);
+
+  const { values, handleChange, errors, isValid, resetForm, setValues } =
     useFormWithValidation();
   const [isEquals, setisEquals] = useState(true);
-  const [isDisabled, setIsDisabled] = useState(true);
 
   const signOut = () => {
     onSignOut();
@@ -26,20 +27,21 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
       const name = values.name;
       const email = values.email;
       handleUpdateUser(name, email);
+      // ADD:
+      setisEquals(true);
     }
-    setIsDisabled(!isDisabled);
   }
-
-  function handleCheckEquals() {
-    let name = values.name === currentUser.name;
-    let email = values.email === currentUser.email;
-    setisEquals(name && email);
-  }
-
+     // ADD:
   useEffect(() => {
-    values.name = currentUser.name;
-    values.email = currentUser.email;
-  }, []);
+    setValues({ name: currentUser.name, email: currentUser.email });
+  }, [currentUser]);
+
+  // TODO: оптимизировал проверку на равенство
+  useEffect(() => {
+    setisEquals(
+      values.name === currentUser.name && values.email === currentUser.email
+    );
+  }, [values.name, values.email]);
 
   return (
     <>
@@ -52,16 +54,14 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
             <input
               name="name"
               className="profile__value"
-              value={isDisabled ? currentUser.name : values.name}
+              value={values.name}
               onChange={(e) => {
                 handleChange(e);
-                handleCheckEquals();
               }}
               type="text"
               minLength="2"
               maxLength="30"
               placeholder="Введите ваше имя"
-              disabled={isDisabled}
             />
           </div>
           <span className="profile__validation">{errors?.name}</span>
@@ -73,37 +73,37 @@ function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
             <input
               name="email"
               className="profile__value"
-              value={isDisabled ? currentUser.email : values.email}
+              // TODO: убрал isDisabled
+              value={values.email}
               onChange={(e) => {
                 handleChange(e);
-                handleCheckEquals();
               }}
               type="email"
               minLength="2"
               maxLength="30"
               pattern="[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-z]{2,4}$"
               placeholder="Введите ваш email"
-              disabled={isDisabled}
             />
           </div>
           <span className="profile__validation">{errors?.email}</span>
         </div>
         <button
+          // ADD:
           className={`profile__edit ${
-            (isEquals === false && isValid === true) || isDisabled === true
+            isEquals === false && isValid === true
               ? ""
               : "profile__edit-disabled"
           }`}
           type="submit"
           disabled={
-            (isEquals === false && isValid === true) || isDisabled === true
-              ? false
-              : true
+            // ADD:
+            isEquals === false && isValid === true ? false : true
           }
         >
           Редактировать
         </button>
-        <Link to="/signup" className="profile__logout" onClick={signOut}>
+
+        <Link to="/" className="profile__logout" onClick={signOut}>
           Выйти из аккаунта
         </Link>
       </form>
