@@ -1,24 +1,109 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Profile.css";
 import { Link } from "react-router-dom";
+import Header from "../Header/Header";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from "../../hooks/useForm";
 
-function Profile() {
+function Profile({ isLoggedIn, onSignOut, handleUpdateUser }) {
+  const currentUser = useContext(CurrentUserContext);
+  console.log("currentUser", currentUser);
+
+  const { values, handleChange, errors, isValid, resetForm, setValues } =
+    useFormWithValidation();
+  const [isEquals, setisEquals] = useState(true);
+
+  const signOut = () => {
+    onSignOut();
+    resetForm();
+  };
+  // обновляю инфу юзера
+  function updateUserInfo(e) {
+    e.preventDefault();
+    if (
+      values.name !== currentUser.name ||
+      values.email !== currentUser.email
+    ) {
+      const name = values.name;
+      const email = values.email;
+      handleUpdateUser(name, email);
+      // ADD:
+      setisEquals(true);
+    }
+  }
+     // ADD: при изменении юзера устанавливаю вэлью
+  useEffect(() => {
+    setValues({ name: currentUser.name, email: currentUser.email });
+  }, [currentUser]);
+  // ADD: при изменении name или email проверяю равенство
+  useEffect(() => {
+    setisEquals(
+      values.name === currentUser.name && values.email === currentUser.email
+    );
+  }, [values.name, values.email]);
+
   return (
-    <section className="profile_container">
-      <h2 className="profile__greetings">Привет, Виталий!</h2>
-      <div className="profile__info">
-        <p className="profile__category">Имя</p>
-        <p className="profile__value">Виталий</p>
-      </div>
-      <div className="profile__info">
-        <p className="profile__category">E-mail</p>
-        <p className="profile__value">pochta@yandex.ru</p>
-      </div>
-      <p className="profile__edit">Редактировать</p>
-      <Link to="/signup" className="profile__logout">
-        Выйти из аккаунта
-      </Link>
-    </section>
+    <>
+      <Header isLoggedIn={isLoggedIn} />
+      <form className="profile_container" onSubmit={updateUserInfo} noValidate>
+        <h2 className="profile__greetings">{`Привет, ${currentUser.name}!`}</h2>
+        <div className="profile__info">
+          <div className="profile__wrapper">
+            <p className="profile__category">Имя</p>
+            <input
+              name="name"
+              className="profile__value"
+              value={values.name}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              type="text"
+              minLength="2"
+              maxLength="30"
+              placeholder="Введите ваше имя"
+            />
+          </div>
+          <span className="profile__validation">{errors?.name}</span>
+        </div>
+
+        <div className="profile__info">
+          <div className="profile__wrapper">
+            <p className="profile__category">E-mail</p>
+            <input
+              name="email"
+              className="profile__value"
+              value={values.email}
+              onChange={(e) => {
+                handleChange(e);
+              }}
+              type="email"
+              minLength="2"
+              maxLength="30"
+              pattern="[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-z]{2,4}$"
+              placeholder="Введите ваш email"
+            />
+          </div>
+          <span className="profile__validation">{errors?.email}</span>
+        </div>
+        <button
+          className={`profile__edit ${
+            isEquals === false && isValid === true
+              ? ""
+              : "profile__edit-disabled"
+          }`}
+          type="submit"
+          disabled={
+            isEquals === false && isValid === true ? false : true
+          }
+        >
+          Редактировать
+        </button>
+
+        <Link to="/" className="profile__logout" onClick={signOut}>
+          Выйти из аккаунта
+        </Link>
+      </form>
+    </>
   );
 }
 

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import accountIconMain from "../../images/account_icon.svg";
-import accountIcon from '../../images/accounticon.svg'
+import accountIcon from "../../images/accounticon.svg";
 import logo from "../../images/logo.svg";
 import { Link, useLocation } from "react-router-dom";
 import burgerimg from "../../images/burgericon.svg";
@@ -12,7 +12,6 @@ function Navigation({ isLoggedIn }) {
 
   function changeBurgerVisibility() {
     setIsOpenBurger(!isOpenBurger);
-    console.log('asdasdasd')
   }
 
   return (
@@ -46,21 +45,33 @@ function Navigation({ isLoggedIn }) {
               <Link to={"/profile"} className="navigation__link-profile">
                 Аккаунт
               </Link>
-              <div className={`navigation__link-profile_logo ${
-                location.pathname !== "/"
-                  ? "navigation__link-profile_logo-grey"
-                  : ""
-              }`}>
+              <div
+                className={`navigation__link-profile_logo ${
+                  location.pathname !== "/"
+                    ? "navigation__link-profile_logo-grey"
+                    : ""
+                }`}
+              >
                 <img
-                  src={location.pathname !== '/' ? accountIcon : accountIconMain}
+                  src={
+                    location.pathname !== "/" ? accountIcon : accountIconMain
+                  }
                   alt="лого"
                   className="navigation__logo-profile"
                 />
               </div>
             </div>
           </div>
-          <img src={burgerimg} alt="лого" className="navigation__logo-burger" onClick={() => setIsOpenBurger(true)}/>
-          <BurgerMenu isOpen={isOpenBurger} changeBurgerVisibility={changeBurgerVisibility}/>
+          <img
+            src={burgerimg}
+            alt="лого"
+            className="navigation__logo-burger"
+            onClick={() => setIsOpenBurger(true)}
+          />
+          <BurgerMenu
+            isOpen={isOpenBurger}
+            changeBurgerVisibility={changeBurgerVisibility}
+          />
         </>
       ) : (
         <>

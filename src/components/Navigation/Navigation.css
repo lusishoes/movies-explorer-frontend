@@ -136,7 +136,11 @@
     visibility: hidden;
   }
 
-  .navigation__link{
-    display: none;
+  .navigation__signin-link_wrapper{
+    margin-left: 14px;
   }
+
+  /* .navigation__link{
+    display: none;
+  } */
 }

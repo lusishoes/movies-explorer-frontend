@@ -38,6 +38,11 @@
   line-height: normal;
 }
 
+.register__link-disabled {
+  cursor: default;
+  opacity: 0.8;
+}
+
 .register__subtitle:first-of-type {
   margin-top: 0;
 }
